@@ -1,0 +1,9 @@
+[submodule "pyodide"]
+	path = pyodide
+	url = https://github.com/pyodide/pyodide.git
+[submodule "numpy"]
+	path = numpy
+	url = https://github.com/numpy/numpy.git
+[submodule "cpython"]
+	path = cpython
+	url = https://github.com/python/cpython.git
