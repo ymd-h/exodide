@@ -21,4 +21,8 @@ def LDFLAGS() -> List[str]:
             "-s", "SIDE_MODULE=1"]
 
 class build_ext(_build_ext):
-    pass
+    def run(self):
+        self.include_dirs[0:0] = [cpython_get_include(), numpy_get_include()]
+        for ext in self.extensions:
+            ext.extra_link_args.extend(LDFLAGS())
+        super().run()
