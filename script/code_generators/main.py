@@ -8,7 +8,7 @@ def main():
     sys.path.insert(0, codegen_dir)
 
     def generate_api(module_name):
-        script = join(codegen_dir, module_name + '.py')
+        script = os.path.join(codegen_dir, module_name + '.py')
 
         m = __import__(module_name)
         h_file, c_file, doc_file = m.generate_api(output_dir)
