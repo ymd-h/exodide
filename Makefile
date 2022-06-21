@@ -34,7 +34,7 @@ numpy:
 	cd numpy && \
 	find ../pyodide/packages/numpy/patches -type f -name "*.patch" -print0 | \
 	sort -zn | xargs -0 -I '{}' patch -p1 --binary --verbose -i '{}'
-	cp pyodide/packages/numpy/config/_numpyconfig.h numpy/numpy/core/include/
+	cp pyodide/packages/numpy/config/_numpyconfig.h numpy/numpy/core/include/numpy/
 
 	mkdir -p $(PKG)/numpy
 	cp -r numpy/numpy/core/include/* $(PKG)/numpy/
