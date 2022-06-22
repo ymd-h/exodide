@@ -74,6 +74,20 @@ We distribute patched header files of CPython and NumPy, too.
 
 ## 4. Trial & Error
 
+### Solved: pyodide/pyodide-env doesn't have Python and Emscripten
+
+Official source build image
+[pyodide/pyodide-env](https://hub.docker.com/r/pyodide/pyodide-env)
+doesn't have Python and Emscripten, since these tools will be built, too.
+
+For the convenience, we utilize official
+[python](https://hub.docker.com/_/python) image and setup Emscripten
+on it with Emsdk (Emscripten SDK). Emsdk downloads large compiler
+toolchain, so that we recommend downloading it to mounted host
+directory and reusing afterwards.
+
+
+
 ### Solved: `error: "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)."`
 
 Header files installed at host are incompatible. We use patched and
