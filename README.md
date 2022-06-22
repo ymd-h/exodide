@@ -2,7 +2,9 @@
 
 ## 1. Overview
 
-WARNING: This project is still under development, and doesn't work yet.
+> **Warning**
+> This project is still under development, and doesn't work yet.
+
 
 [Pyodide](https://pyodide.org/en/stable/index.html) is a WebAssembly
 variant of [CPython](https://www.python.org/). By using it, we can run
