@@ -5,8 +5,8 @@
 WARNING: This project is still under development, and doesn't work yet.
 
 [Pyodide](https://pyodide.org/en/stable/index.html) is a WebAssembly
-variant of [CPython](https://www.python.org/).  we can run Python
-code inside web browser.
+variant of [CPython](https://www.python.org/). By using it, we can run
+Python code inside web browser.
 
 Although we can run most of pure-Python packages on Pyodide, however,
 C/C++-extension packages is limited to
@@ -41,6 +41,18 @@ setup(
 
 then `CC=emcc CXX=em++ python setup.py bdist_wheel`.
 
+
+Pyodide doesn't provide all the functionalities of CPython, so that
+you might need to modify your package. You can detect Emscripten
+compiler by `__EMSCRIPTEN__` macro ([ref](https://emscripten.org/docs/compiling/Building-Projects.html#detecting-emscripten-in-preprocessor)).
+
+```cpp
+#ifdef __EMSCRIPTEN__
+// Code for Pyodide
+#else
+// Code for Others
+#endif
+```
 
 ## 3. LICENSEs
 
