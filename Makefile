@@ -1,4 +1,4 @@
-PKG := extodide
+PKG := exodide
 
 .PHONY: all
 all: cpython numpy
