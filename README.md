@@ -74,7 +74,7 @@ We distribute patched header files of CPython and NumPy, too.
 
 ## 4. Trial & Error
 
-### Solved: pyodide/pyodide-env doesn't have Python and Emscripten
+### #1: Solved: pyodide/pyodide-env doesn't have Python and Emscripten
 
 Official source build image
 [pyodide/pyodide-env](https://hub.docker.com/r/pyodide/pyodide-env)
@@ -88,25 +88,25 @@ directory and reusing afterwards.
 
 
 
-### Solved: `error: "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)."`
+### #2: Solved: `error: "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)."`
 
 Header files installed at host are incompatible. We use patched and
 correctly configured headers.
 
-### Solved: `SIZEOF_VOID_P` is not equal to `sizeof(void*)`
+### #3: Solved: `SIZEOF_VOID_P` is not equal to `sizeof(void*)`
 
 Header files installed at host are incompatible. We use patched and
 correctly configured headers.
 
 
-### Solved: `__multiarray_api.h` and `__ufunc_api.h` are missing.
+### #4: Solved: `__multiarray_api.h` and `__ufunc_api.h` are missing.
 
 They are auto generated headers. We copied
 `numpy/numpy/core/code_generators` codes and modified them to work
 stand-alone.
 
 
-### Solved: `NPY_API_VERSION` and `NPY_ABI_VERSION` are not defined.
+### #5: Solved: `NPY_API_VERSION` and `NPY_ABI_VERSION` are not defined.
 
 In ordinary build, these are defined at `_numpyconfig.h`, but Pyodide
 provides custom `_numpyconfig.h` without these definitions.
@@ -116,7 +116,7 @@ We manually extract the original definitions (aka. `C_API_VERSION` and
 them to `_numpyconfig.h`
 
 
-### WIP: `error: pthreads + MODULARIZE currently require you to set -sEXPORT_NAME=Something (see settings.js) to Something != Module, so that the .worker.js file can work`
+### #6: WIP: `error: pthreads + MODULARIZE currently require you to set -sEXPORT_NAME=Something (see settings.js) to Something != Module, so that the .worker.js file can work`
 
 Even though we remove `-pthread` from `Extension.extra_link_args`,
 still linker gets `-pthread` option from somewhere...
