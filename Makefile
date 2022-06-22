@@ -32,6 +32,8 @@ cpython:
 .PHONY: numpy
 numpy: numpy/.patched
 	python3 script/code_generators/main.py
+	grep "C_API_VERSION = " numpy/numpy/core/setup_common.py | cut -d' ' -f3 | sed -e "s/^/#define NPY_API_VERSION /" >> numpy/numpy/core/include/numpy/_numpyconfig.h
+	grep "C_ABI_VERSION = " numpy/numpy/core/setup_common.py | cut -d' ' -f3 | sed -e "s/^/#define NPY_ABI_VERSION /" >> numpy/numpy/core/include/numpy/_numpyconfig.h
 	mkdir -p $(PKG)/numpy
 	cp -r numpy/numpy/core/include/* $(PKG)/numpy/
 
