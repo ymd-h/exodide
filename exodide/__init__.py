@@ -1,8 +1,10 @@
 import os
+import sys
 from typing import List
 
 from setuptools.command.build_ext import build_ext as _build_ext
 
+system_include = os.path.join(sys.prefix, "include", "python")
 
 def cpython_get_include() -> str:
     return f"{os.path.dirname(__file__)}/cpython"
@@ -22,7 +24,11 @@ def LDFLAGS() -> List[str]:
 
 class build_ext(_build_ext):
     def run(self):
-        self.include_dirs[0:0] = [cpython_get_include(), numpy_get_include()]
+        self.include_dirs = [
+            cpython_get_include(),
+            numpy_get_include()
+        ] + [d for d self.include_dirs if (system_include not in d)]
+
         for ext in self.extensions:
             ext.extra_link_args.extend(LDFLAGS())
         super().run()
