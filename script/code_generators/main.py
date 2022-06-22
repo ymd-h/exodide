@@ -2,7 +2,8 @@ import os
 import sys
 
 codegen_dir = os.path.dirname(__file__)
-output_dir = os.path.join(codegen_dir, "..", "..", "numpy", "numpy", "core", "src")
+output_dir = os.path.join(codegen_dir,
+                          "..", "..", "numpy", "numpy", "core", "include", "numpy")
 
 def main():
     sys.path.insert(0, codegen_dir)
