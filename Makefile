@@ -23,7 +23,7 @@ cpython:
 	--host=wasm32-unknown-emscripten \
 	--build=$(shell cpython/config.guess)
 
-	cat pyodide/cpython/pyconfig.undefs.h >> cpython/pyconfig.h
+	cat pyodide/cpython/pyconfig.undefs.h >> cpython/Include/pyconfig.h
 
 	mkdir -p $(PKG)/cpython
 	cp -r cpython/Include/* $(PKG)/cpython/
