@@ -74,11 +74,15 @@ We distribute patched header files of CPython and NumPy, too.
 
 ## 4. Trial & Error
 
-### `error: "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)."`
+### Solved: `error: "LONG_BIT definition appears wrong for platform (bad gcc/glibc config?)."`
 
+Header files installed at host are incompatible. We use patched and
+correctly configured headers.
 
-### `SIZEOF_VOID_P` is not equal to `sizeof(void*)`
+### Solved: `SIZEOF_VOID_P` is not equal to `sizeof(void*)`
 
+Header files installed at host are incompatible. We use patched and
+correctly configured headers.
 
 
 ### Solved: `__multiarray_api.h` and `__ufunc_api.h` are missing.
