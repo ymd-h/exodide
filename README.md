@@ -116,7 +116,7 @@ We manually extract the original definitions (aka. `C_API_VERSION` and
 them to `_numpyconfig.h`
 
 
-### `error: pthreads + MODULARIZE currently require you to set -sEXPORT_NAME=Something (see settings.js) to Something != Module, so that the .worker.js file can work`
+### WIP: `error: pthreads + MODULARIZE currently require you to set -sEXPORT_NAME=Something (see settings.js) to Something != Module, so that the .worker.js file can work`
 
 Even though we remove `-pthread` from `Extension.extra_link_args`,
 still linker gets `-pthread` option from somewhere...
