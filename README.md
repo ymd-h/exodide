@@ -4,9 +4,8 @@
 
 WARNING: This project is still under development, and doesn't work yet.
 
-[Pyodide](https://pyodide.org/en/stable/index.html) is a greate
-project, which is a WebAssembly variant of
-[CPython](https://www.python.org/). By using it, we can run Python
+[Pyodide](https://pyodide.org/en/stable/index.html) is a WebAssembly
+variant of [CPython](https://www.python.org/).  we can run Python
 code inside web browser.
 
 Although we can run most of pure-Python packages on Pyodide, however,
