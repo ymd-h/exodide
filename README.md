@@ -70,14 +70,14 @@ We distribute patched header files of CPython and NumPy, too.
 
 
 
-### `__multiarray_api.h` and `__ufunc_api.h` are missing.
+### Solved: `__multiarray_api.h` and `__ufunc_api.h` are missing.
 
 They are auto generated headers. We copied
 `numpy/numpy/core/code_generators` codes and modified them to work
 stand-alone.
 
 
-### `NPY_API_VERSION` and `NPY_ABI_VERSION` are not defined.
+### Solved: `NPY_API_VERSION` and `NPY_ABI_VERSION` are not defined.
 
 In ordinary build, these are defined at `_numpyconfig.h`, but Pyodide
 provides custom `_numpyconfig.h` without these definitions.
