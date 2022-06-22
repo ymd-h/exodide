@@ -27,7 +27,7 @@ class build_ext(_build_ext):
         self.include_dirs = [
             cpython_get_include(),
             numpy_get_include()
-        ] + [d for d self.include_dirs if (system_include not in d)]
+        ] + [d for d in self.include_dirs if (system_include not in d)]
 
         for ext in self.extensions:
             ext.extra_link_args.extend(LDFLAGS())
