@@ -30,5 +30,5 @@ class build_ext(_build_ext):
         ] + [d for d in self.include_dirs if (system_include not in d)]
 
         for ext in self.extensions:
-            ext.extra_link_args.extend(LDFLAGS())
+            ext.extra_link_args = ext.extra_link_args + LDFLAGS()
         super().run()
