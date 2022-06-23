@@ -123,7 +123,7 @@ them to `_numpyconfig.h`
 Even though we remove `-pthread` from `Extension.extra_link_args`,
 still linker gets `-pthread` option from somewhere...
 
-It seems that `customize_compiler` set comlier executables, we
+It seems that `customize_compiler()` sets comlier executables, we
 manually remove `-pthread` at `build_ext.build_extensions()`.
 
 
