@@ -125,3 +125,6 @@ still linker gets `-pthread` option from somewhere...
 
 It seems that `customize_compiler` set comlier executables, we
 manually remove `-pthread` at `build_ext.build_extensions()`.
+
+
+### #7: WIP: `error: [Errno 1] Operation not permitted` when `running egg_info`
