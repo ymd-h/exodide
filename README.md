@@ -11,7 +11,7 @@ variant of [CPython](https://www.python.org/). By using it, we can run
 Python code inside web browser.
 
 Although we can run most of pure-Python packages on Pyodide, however,
-C/C++-extension packages is limited to
+available C/C++-extension packages are limited to
 [builtin packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html).
 
 The motivation of this project (exodide) is providing C/C++-extension
