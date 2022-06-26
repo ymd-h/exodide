@@ -38,7 +38,7 @@ class build(_build):
             return super().finalize_options()
 
     def run(self):
-        super().run()
+        return super().run()
 
 
 class build_ext(_build_ext):
@@ -50,7 +50,7 @@ class build_ext(_build_ext):
 
         for ext in self.extensions:
             ext.extra_link_args = ext.extra_link_args + LDFLAGS()
-        super().run()
+        return super().run()
 
     def build_extensions(self):
         self.compiler.linker_so = [so for so in self.compiler.linker_so
