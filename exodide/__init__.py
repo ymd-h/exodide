@@ -54,7 +54,7 @@ class build_ext(_build_ext):
 
     def build_extensions(self):
         self.compiler.linker_so = [so for so in self.compiler.linker_so
-                                   if so != "-pthread"]
+                                   if (so not in ["-shared", "-pthread"])]
         return super().build_extensions()
 
     def get_ext_filename(self, ext_name):
