@@ -131,3 +131,8 @@ manually remove `-pthread` at `build_ext.build_extensions()`.
 
 Instead of setting at `build.finalize_options()`, we patch
 `get_platform()` by `unittest.mock`.
+
+
+### #8: WIP: `ImportError: dynamic module does not define module export function (PyInit_FOO)`
+
+
