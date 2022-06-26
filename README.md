@@ -37,7 +37,7 @@ import exodide
 
 setup(
     # omit
-    cmdclass={"build_ext": exodide.build_ext},
+    cmdclass=exodide.cmdclass(), # {'build': exodide.build, 'build_ext': exodide.build_ext}
 )
 ```
 
