@@ -127,6 +127,7 @@ It seems that `customize_compiler()` sets comlier executables, we
 manually remove `-pthread` at `build_ext.build_extensions()`.
 
 
-### #7: Solved: `error: [Errno 1] Operation not permitted` when `running egg_info`
+### #7: Solved: `error: --plat-name only supported on Windows (try using './configure --help' on your platform)`
 
-This issue is not relavant.
+Instead of setting at `build.finalize_options()`, we patch
+`get_platform()` by `unittest.mock`.
