@@ -74,7 +74,19 @@ We distribute patched header files of CPython and NumPy, too.
   * MIT
 
 
-## 4. Trial & Error
+## 4. Build exodide
+
+```shell
+git clone --recursive --depth 1 https://github.com/ymd-h/exodide.git
+cd exodide
+
+make
+
+pip install .
+```
+
+
+## 5. Trial & Error
 
 ### #1: Solved: pyodide/pyodide-env doesn't have Python and Emscripten
 
