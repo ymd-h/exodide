@@ -1,8 +1,12 @@
 import os
 import sys
-from typing import List
+from typing import Dict, List
+from unittest import mock
 
+from distutils.cmd import Command
+from distutils.command.build import build as _build
 from setuptools.command.build_ext import build_ext as _build_ext
+from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 
 system_include = os.path.join(sys.prefix, "include", "python")
 
@@ -22,6 +26,21 @@ def LDFLAGS() -> List[str]:
             "-s", "WASM_BIGINT",
             "-s", "SIDE_MODULE=1"]
 
+
+def plat_name() -> str:
+    return "wasm32-emscripten"
+
+
+class build(_build):
+    def finalize_options(self):
+        with mock.patch("distutils.command.build.get_platform") as get_platform:
+            get_platform.return_value = plat_name()
+            return super().finalize_options()
+
+    def run(self):
+        super().run()
+
+
 class build_ext(_build_ext):
     def run(self):
         self.include_dirs = [
@@ -37,3 +56,12 @@ class build_ext(_build_ext):
         self.compiler.linker_so = [so for so in self.compiler.linker_so
                                    if so != "-pthread"]
         return super().build_extensions()
+
+    def get_ext_filename(self, ext_name):
+        ext_path = ext_name.split('.')
+        return os.path.join(*ext_path) + ".cpython-310-wasm32-emscripten.so"
+
+
+def cmdclass() -> Dict[str, Command]:
+    return {"build": build,
+            "build_ext": build_ext}
