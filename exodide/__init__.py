@@ -28,7 +28,7 @@ def LDFLAGS() -> List[str]:
 
 
 def plat_name() -> str:
-    return "wasm32-emscripten"
+    return "emscripten-wasm32"
 
 
 class build(_build):
