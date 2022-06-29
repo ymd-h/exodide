@@ -55,6 +55,10 @@ class MetaData:
             self.msg += f"Error: First Section must be dylink/dylink.0"
             return
 
+        if self.idx != self.end:
+            self.valid = False
+            self.msg += f"Error: idx!=end ({self.idx} != {self.end})"
+
     def dylink(self):
         self.memory_size: int = self.getLEB()
         self.memory_align: int = self.getLEB()
