@@ -160,7 +160,7 @@ By using Pyodide v0.21.0-alpha2, which compiled with Emscripten
 v3.1.14, "dylink.0" custom section is recognized correctly.
 
 
-### #9: WIP: `RangeError: WebAssembly.Compile is disallowed on the main thread, if the buffer size is larger than 4KB. Use WebAssembly.compile, or compile on a worker thread.`
+### #9: Solved: `RangeError: WebAssembly.Compile is disallowed on the main thread, if the buffer size is larger than 4KB. Use WebAssembly.compile, or compile on a worker thread.`
 
 
 This is the Chromium limitation. See [Limitations](https://emscripten.org/docs/compiling/Dynamic-Linking.html#limitations).
