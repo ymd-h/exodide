@@ -175,7 +175,7 @@ class MetaData:
         length: int = self.getLEB()
         s: str = str(self.mem[self.idx:self.idx+length]
                      .view(dtype=np.dtype(f"a{length}"))[0],
-                     encoding="ascii")
+                     encoding="utf-8")
         self.idx += length
         return s
 
