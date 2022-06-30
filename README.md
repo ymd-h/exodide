@@ -171,5 +171,11 @@ We must compile asyncrhonically, so that we use Pyodide internal API
 
 
 
-### #10: WIP: `Pyodide has suffered a fatal error.` / `TypeError: Cannot read properties of undefined (reading 'apply')
-`
+### #10: WIP: `Pyodide has suffered a fatal error.` / `TypeError: Cannot read properties of undefined (reading 'apply')`
+
+It seems that stack overflow happens, since `__handle_stack_overflow`,
+called from Wasm, raises the `TypeError`.
+
+Maybe `_emscripten_stack_get_end()` and/or
+`_emscripten_stack_get_base()` have the problem. (We couldn't find
+these definitions, yet....)
