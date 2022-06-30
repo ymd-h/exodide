@@ -168,3 +168,8 @@ This is the Chromium limitation. See [Limitations](https://emscripten.org/docs/c
 
 We must compile asyncrhonically, so that we use Pyodide internal API
 `loadDynlib(lib, sharad)`.
+
+
+
+### #10: WIP: `Pyodide has suffered a fatal error.` / `TypeError: Cannot read properties of undefined (reading 'apply')
+`
