@@ -145,6 +145,26 @@ Instead of setting at `build.finalize_options()`, we patch
 `get_platform()` by `unittest.mock`.
 
 
-### #8: WIP: `ImportError: dynamic module does not define module export function (PyInit_FOO)`
+### #8: Solved: `ImportError: Could not load dynamic lib: FOO.so`
 
 
+The current stable Pyodide v0.20.0 uses old Emscripten v2.0.27, which
+supports only legacy "dylink" section, but "dylink.0" section yet.
+
+LLVM in the latest Emscripten emits "dylink.0", then Pyodide fails `dlopen()`
+
+Ref: [Web Assembly Dynamic Linking](https://github.com/WebAssembly/tool-conventions/blob/main/DynamicLinking.md) and its [PR](https://github.com/WebAssembly/tool-conventions/pull/170).
+
+
+By using Pyodide v0.21.0-alpha2, which compiled with Emscripten
+v3.1.14, "dylink.0" custom section is recognized correctly.
+
+
+### #9: WIP: `RangeError: WebAssembly.Compile is disallowed on the main thread, if the buffer size is larger than 4KB. Use WebAssembly.compile, or compile on a worker thread.`
+
+
+This is the Chromium limitation. See [Limitations](https://emscripten.org/docs/compiling/Dynamic-Linking.html#limitations).
+
+
+We must compile asyncrhonically, so that we use Pyodide internal API
+`loadDynlib(lib, sharad)`.
