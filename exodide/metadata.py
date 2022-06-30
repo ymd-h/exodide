@@ -20,6 +20,9 @@ class MetaData:
             self.msg += f"Error: Fail to open: {e}"
             return
 
+        self.file_size = self.mem.shape[0]
+        self.msg += f"File Size: {self.file_size}\n"
+
         self.endian: int = self.mem[0:4].view(np.uint32)
         self.msg += f"Endian: {int(self.endian): x}\n"
         self.is_LE: bool = True
