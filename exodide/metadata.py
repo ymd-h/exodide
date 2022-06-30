@@ -58,6 +58,12 @@ class MetaData:
             self.msg += f"Error: First Section must be dylink/dylink.0"
             return
 
+        align = getattr(self, "table_align", None)
+        if align != 0:
+            self.valid = False
+            self.msg += f"Error: Invalid Table Align: {align}"
+            return
+
         if self.idx != self.end:
             self.valid = False
             self.msg += f"Error: idx!=end ({self.idx} != {self.end})"
