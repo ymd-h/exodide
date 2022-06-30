@@ -71,19 +71,19 @@ class MetaData:
     def dylink(self):
         self.memory_size: int = self.getLEB()
         self.memory_align: int = self.getLEB()
-        self.msg += f"Memory:\n"
-        self.msg += f"  Size: {self.memory_size}\n"
-        self.msg += f"  Align: {self.memory_align}\n"
+        self.msg += f"  Memory:\n"
+        self.msg += f"    Size: {self.memory_size}\n"
+        self.msg += f"    Align: {self.memory_align}\n"
 
         self.table_size: int = self.getLEB()
         self.table_align: int = self.getLEB()
-        self.msg += f"Table:\n"
-        self.msg += f"  Size: {self.table_size}\n"
-        self.msg += f"  Align: {self.table_align}\n"
+        self.msg += f"  Table:\n"
+        self.msg += f"    Size: {self.table_size}\n"
+        self.msg += f"    Align: {self.table_align}\n"
 
         necessary_count: int = self.getLEB()
         self.necessary_libs = [self.getString() for _ in range(necessary_count)]
-        self.msg += f"Necessary Dynamic Libs: {self.necessary_libs}\n"
+        self.msg += f"  Necessary Dynamic Libs: {self.necessary_libs}\n"
 
 
     def dylink0(self):
@@ -102,27 +102,27 @@ class MetaData:
             subsection_type: int = self.getU8()
             subsection_size: int = self.getLEB()
             if subsection_type == WASM_DYLINK_MEM_INFO:
-                self.msg += f"Sub-Section: WASM_DYLINK_MEM_INFO\n"
+                self.msg += f"  Sub-Section: WASM_DYLINK_MEM_INFO\n"
 
                 self.memory_size: int = self.getLEB()
                 self.memory_align: int = self.getLEB()
-                self.msg += f"Memory:\n"
-                self.msg += f"  Size: {self.memory_size}\n"
-                self.msg += f"  Align: {self.memory_align}\n"
+                self.msg += f"  Memory:\n"
+                self.msg += f"    Size: {self.memory_size}\n"
+                self.msg += f"    Align: {self.memory_align}\n"
 
                 self.table_size: int = self.getLEB()
                 self.table_align: int = self.getLEB()
-                self.msg += f"Table:\n"
-                self.msg += f"  Size: {self.table_size}\n"
-                self.msg += f"  Align: {self.table_align}\n"
+                self.msg += f"  Table:\n"
+                self.msg += f"    Size: {self.table_size}\n"
+                self.msg += f"    Align: {self.table_align}\n"
             elif subsection_type == WASM_DYLINK_MEM_NEEDED:
-                self.msg += f"Sub-Section: WASM_DYLINK_MEM_NEEDED\n"
+                self.msg += f"  Sub-Section: WASM_DYLINK_MEM_NEEDED\n"
 
                 necessary_count: int = self.getLEB()
                 self.necessary_libs.extend([self.getString()
                                             for _ in range(necessary_count)])
             elif subsection_type == WASM_DYLINK_EXPORT_INFO:
-                self.msg += f"Sub-Section: WASM_DYLINK_EXPORT_INFO\n"
+                self.msg += f"  Sub-Section: WASM_DYLINK_EXPORT_INFO\n"
 
                 cnt: int = self.getLEB()
                 while cnt > 0:
@@ -131,7 +131,7 @@ class MetaData:
                     if (getLEB() & WASM_SYMBOL_TLS):
                         self.tls_export.add(sym)
             elif subsection_type == WASM_DYLINK_IMPORT_INFO:
-                self.msg += f"Sub-Section: WASM_DYLINK_IMPORT_INFO\n"
+                self.msg += f"  Sub-Section: WASM_DYLINK_IMPORT_INFO\n"
 
                 cnt: int = self.getLEB()
                 while cnt > 0:
@@ -142,12 +142,12 @@ class MetaData:
                         WASM_SYMBOL_BINDING_WEAK):
                         self.weak_import.add(sym)
             else:
-                self.msg += f"Sub-Section: Unknown: {subsection_type}\n"
+                self.msg += f"  Sub-Section: Unknown: {subsection_type}\n"
                 self.idx += subsection_size
 
-        self.msg += f"Necessary Dynamic Libs: {self.necessary_libs}\n"
-        self.msg += f"TLS Export: {self.tls_export}\n"
-        self.msg += f"Weak Import: {self.weak_import}\n"
+        self.msg += f"  Necessary Dynamic Libs: {self.necessary_libs}\n"
+        self.msg += f"  TLS Export: {self.tls_export}\n"
+        self.msg += f"  Weak Import: {self.weak_import}\n"
 
 
     def getU8(self) -> int:
