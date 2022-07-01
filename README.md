@@ -31,13 +31,13 @@ the version. Your custom package must run on Python 3.10.
 
 ```python:setup.py
 from setuptools import setup
-import exodide
+from exodide import build
 
 # omit
 
 setup(
     # omit
-    cmdclass=exodide.cmdclass(), # {'build': exodide.build, 'build_ext': exodide.build_ext}
+    cmdclass=build.cmdclass(), # {'build': exodide.build, 'build_ext': exodide.build_ext}
 )
 ```
 
