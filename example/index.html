@@ -1,0 +1,23 @@
+<!DOCTYPE>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.0a2/full/pyodide.js"></script>
+    <script type="module">
+      const pyodide = loadPyodide();
+      await pyodide.runPythonAsync(`
+import micropip
+micropip.install("exodide")
+
+from exodide.install import fetch_install
+await fetch_install("dist/exodide_example-0.0.0-cp310-cp310-emscripten_wasm32.whl")
+
+import exodide_example as ee
+
+ee.hello_world()
+`);
+    </script>
+  </body>
+</html>
