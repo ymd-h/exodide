@@ -1,3 +1,19 @@
+"""
+exodide.inspect module
+
+This module provides functionalities
+to inspect shared object (.so) in extension package (.whl)
+
+Examples
+--------
+>>> from exodide.inspect import MetaData
+>>> metadata = MetaData("example-module.so")
+>>> print(metadata)
+
+This module can be run from command line, too.
+`python3 -m exodide.inspect example-module.so`
+"""
+
 import os
 import sys
 
