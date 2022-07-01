@@ -27,7 +27,7 @@ To build C/C++ to WebAssembly, you need
 Since Pyodide is built with Python 3.10, we only prepare headers for
 the version. Your custom package must run on Python 3.10.
 
-### 2.2 Usage
+### 2.2 Build with exodide
 
 ```python:setup.py
 from setuptools import setup
@@ -55,6 +55,30 @@ compiler by `__EMSCRIPTEN__` macro ([ref](https://emscripten.org/docs/compiling/
 // Code for Others
 #endif
 ```
+
+### 2.3 Install to Pyodide
+```javascript
+const pyodide = await loadPyodide();
+
+await pyodide.runPythonAsync(`
+import micropip
+micropip.install("exodide")
+
+from exodide.install import fetch_install
+
+await fetch_install("example.com/your-package.whl")
+
+import your_package
+# omit
+`);
+```
+
+### 2.4 Inspect Shared Object
+
+```shell
+python3 -m exodide.inspect your-package/your-module.so
+```
+
 
 ## 3. LICENSEs
 
