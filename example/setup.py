@@ -10,7 +10,7 @@ setup(name="exodide-example",
       packages=find_packages(),
       cmdclass=build.cmdclass(),
       ext_modules=[Extension("exodide_example.example",
-                             sources=["exodide-example/example.cc"],
+                             sources=["exodide_example/example.cc"],
                              extra_compile_args=["-std=c++17",
                                                  f"-I{include}"],
                              language="c++")])
