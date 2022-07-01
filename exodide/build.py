@@ -1,3 +1,10 @@
+"""
+exodide.build module
+
+This module provides functionalities
+to build C/C++ extension package for Pyodide.
+"""
+
 import os
 import sys
 from typing import Dict, List
