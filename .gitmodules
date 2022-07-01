@@ -7,3 +7,6 @@
 [submodule "cpython"]
 	path = cpython
 	url = https://github.com/python/cpython.git
+[submodule "example/pybind11"]
+	path = example/pybind11
+	url = https://github.com/pybind/pybind11.git
