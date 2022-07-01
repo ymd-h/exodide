@@ -1,4 +1,4 @@
-#include <pybind11/pybind11>
+#include <pybind11/pybind11.h>
 
 #include <iostream>
 
@@ -12,5 +12,5 @@ void hello_world(){
 
 PYBIND11_MODULE(example, m){
   m.doc() = "exodide example module";
-  m.def("hello_world", &hello_world, "Hello World")
+  m.def("hello_world", &hello_world, "Hello World");
 }
