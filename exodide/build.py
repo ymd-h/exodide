@@ -44,9 +44,6 @@ class build(_build):
             get_platform.return_value = plat_name()
             return super().finalize_options()
 
-    def run(self):
-        return super().run()
-
 
 class build_ext(_build_ext):
     def run(self):
