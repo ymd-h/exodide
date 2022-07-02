@@ -22,7 +22,9 @@ C/C++-extension packages on Pyodide.
 
 ### 2.1 Prerequest
 To build C/C++ to WebAssembly, you need
-[Emscripten](https://emscripten.org/).
+[Emscripten](https://emscripten.org/). We assume you set up `emcc` and
+`em++` commands as
+[the official document](https://emscripten.org/docs/getting_started/downloads.html).
 
 Since Pyodide is built with Python 3.10, we only prepare headers for
 the version. Your custom package must run on Python 3.10.
