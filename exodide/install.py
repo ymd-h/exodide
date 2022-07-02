@@ -40,7 +40,7 @@ async def fetch_install(wheel_url: str):
     """
     response = await http.pyfetch(wheel_url)
     wheel_buffer = await response.buffer()
-    await install_wheel_buffer(wheel_array)
+    await install_wheel_buffer(wheel_buffer)
 
 
 async def install_wheel_buffer(wheel_buffer: JsProxy):
