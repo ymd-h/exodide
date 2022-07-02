@@ -100,7 +100,7 @@ We distribute patched header files of CPython and NumPy, too.
   * `pyodide` directory
   * [MPL-2.0](https://github.com/pyodide/pyodide/blob/main/LICENSE)
 * Others (exodide original codes)
-  * MIT
+  * [MIT](https://github.com/ymd-h/exodide/blob/master/LICENSE)
 
 
 ## 4. Build exodide
