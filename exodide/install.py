@@ -13,6 +13,11 @@ The following example must run inside JavaScript `pyodide.runPythonAsync()`.
 
 >>> from exodide import install
 >>> await install.fetch_install("https://example.com/your-package.whl")
+
+
+Notes
+-----
+Dependencies are not resolved. User must take care by yourself.
 """
 import asyncio
 
@@ -28,6 +33,10 @@ async def fetch_install(wheel_url: str):
     ----------
     wheel_url : str
        URL where wheel is hosted.
+
+    Notes
+    -----
+    Dependencies are not resolved. User must take care by yourself.
     """
     response = await http.pyfetch(wheel_url)
     wheel_buffer = await response.buffer()
@@ -42,6 +51,10 @@ async def install_wheel_buffer(wheel_buffer: JsProxy):
     ----------
     wheel_buffer
         wheel as Javascript buffer
+
+    Notes
+    -----
+    Dependencies are not resolved. User must take care by yourself.
     """
     so_list = http.unpack_buffer(wheel_buffer,
                                  filename=".whl",
