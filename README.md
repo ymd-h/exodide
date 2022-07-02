@@ -3,7 +3,7 @@
 ## 1. Overview
 
 > **Warning**
-> This project is still under development, and doesn't work yet.
+> This project is still under development.
 
 
 [Pyodide](https://pyodide.org/en/stable/index.html) is a WebAssembly
