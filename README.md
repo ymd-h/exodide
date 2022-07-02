@@ -75,11 +75,14 @@ import your_package
 `);
 ```
 
-### 2.4 Inspect Shared Object
+### 2.4 Inspect Shared Object (for Debugging)
 
 ```shell
 python3 -m exodide.inspect your-package/your-module.so
 ```
+
+Currently, `exodide.inspect` module prints `dylink` / `dylink.0`
+custom section, which are used for metadata of Wasm dynamic link.
 
 
 ## 3. LICENSEs
