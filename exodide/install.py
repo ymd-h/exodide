@@ -44,6 +44,8 @@ async def install_wheel_buffer(wheel_buffer: JsProxy):
         wheel as Javascript buffer
     """
     so_list = http.unpack_buffer(wheel_buffer,
+                                 filename=".whl",
+                                 installer="exodide",
                                  target="site",
                                  format="whl",
                                  calculate_dynlibs=True)
