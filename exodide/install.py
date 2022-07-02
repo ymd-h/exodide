@@ -20,6 +20,7 @@ Notes
 Dependencies are not resolved. User must take care by yourself.
 """
 import asyncio
+import importlib
 
 import pyodide_js
 from pyodide import http, JsProxy
@@ -62,4 +63,5 @@ async def install_wheel_buffer(wheel_buffer: JsProxy):
                                  target="site",
                                  format="whl",
                                  calculate_dynlibs=True)
+    importlib.invalidate_caches()
     await asyncio.gather(*(pyodide_js._api.loadDynlib(so) for so in so_list))
