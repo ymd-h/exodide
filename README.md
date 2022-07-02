@@ -1,5 +1,7 @@
 # exodide: build_ext for Pyodide
 
+![PyPI](https://img.shields.io/pypi/v/exodide)
+
 ## 1. Overview
 
 > **Warning**
