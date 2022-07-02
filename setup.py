@@ -10,7 +10,7 @@ setup(name="exodide",
       package_data={"exodide":
                     ["cpython/*.h",
                      "cpython/cpython/*.h",
-                     "cpython/internal/*.h"
+                     "cpython/internal/*.h",
                      "cpython/LICENSE",
                      "numpy/numpy/*.h",
                      "numpy/numpy/libdivide/*",
