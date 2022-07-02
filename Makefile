@@ -27,6 +27,7 @@ cpython:
 
 	mkdir -p $(PKG)/cpython
 	cp -r cpython/Include/* $(PKG)/cpython/
+	cp cpython/LICENSE $(PKG)/cpython/
 
 
 .PHONY: numpy
@@ -36,6 +37,7 @@ numpy: numpy/.patched
 	grep "C_ABI_VERSION = " numpy/numpy/core/setup_common.py | cut -d' ' -f3 | sed -e "s/^/#define NPY_ABI_VERSION /" >> numpy/numpy/core/include/numpy/_numpyconfig.h
 	mkdir -p $(PKG)/numpy
 	cp -r numpy/numpy/core/include/* $(PKG)/numpy/
+	cp numpy/LICENSE* $(PKG)/numpy/
 
 
 numpy/.patched:
