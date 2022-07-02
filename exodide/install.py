@@ -49,4 +49,4 @@ async def install_wheel_buffer(wheel_buffer: JsProxy):
                                  target="site",
                                  format="whl",
                                  calculate_dynlibs=True)
-    await asyncio.gather(pyodide_js._api.loadDynlib(so) for so in so_list)
+    await asyncio.gather(*(pyodide_js._api.loadDynlib(so) for so in so_list))
