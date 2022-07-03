@@ -7,7 +7,7 @@ import (
 )
 
 
-dagger.#Plan {
+dagger.#Plan & {
   client: filesystem: {
     ".": {
       read: {
