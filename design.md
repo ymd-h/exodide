@@ -56,7 +56,7 @@ these definitions as NumPy do (aka. copy from `C_API_VERSION` and
 
 ## 3. Build Options / Build System
 In terms of build options, we follows Pyodide. For example,
-`-sSIDE_MODULE`, `-sMODULARiZE`, `-sLINKABLE` and so on.
+`-sSIDE_MODULE`, `-sMODULARIZE`, `-sLINKABLE` and so on.
 
 Pyodide utilizes Makefile, however, exodide provides
 `distutils`/`setuptools` command classes to enable users to build with
