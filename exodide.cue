@@ -1,3 +1,5 @@
+package exodide
+
 import (
   "dagger.io/dagger"
   "dagger.io/dagger/core"
