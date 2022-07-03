@@ -1,0 +1,16 @@
+name: exodide
+on: [push, pull_request]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    env:
+      DAGGER_CACHE_FROM: type=gha,scope=exodide
+      DAGGER_CACHE_TO: type=gha,mode=max,scope=exodide
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dagger/dagger-for-github@v3
+        with:
+          cmds: |
+            project init
+            project update
+            do build
