@@ -69,9 +69,8 @@ objects, and repacks them after build.)
 
 
 Users might have several versions of Emscripten. Simply we let users
-specify Emscripten compilers to choose one they want to
-use. Fortunately, by setting `CC` and `CXX` environment values,
-`build_ext` command class uses them;
+specify Emscripten compilers. Fortunately, by setting `CC` and `CXX`
+environment values, `build_ext` command class uses them;
 
 ```shell
 CC=emcc CXX=em++ python3 setup.py bdist_wheel
