@@ -122,7 +122,7 @@ to use new Emscripten to build main module, which can manage legacy
 
 Unfortunately, current (July 2022) stable Pyodide v0.20.0 is compiled
 with old Emscripten v2.0.27. We dicided to use Pyodide v0.21.0-alpha2
-which compiled with latest Emscripten v3.1.14.
+which compiled with latest Emscripten v3.1.13.
 
 
 exodide can dump such `dylink`/`dylink.0` section with
