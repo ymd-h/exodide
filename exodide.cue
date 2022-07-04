@@ -17,13 +17,14 @@ dagger.#Plan & {
     "dist": write: contents: actions.build.output
   }
   actions: {
+    image: docker.#Dockerfile & {
+      source: client.filesystem.".".read.contents
+    }
     build: {
-      image: docker.#Build & {
+      _image: docker.#Build & {
         steps: [
-          docker.#Dockerfile & {
-            source: client.filesystem.".".read.contents
-          },
           docker.#Copy & {
+            input: image.output
             contents: client.filesystem.".".read.contents
           },
           docker.#Run & {
@@ -39,11 +40,28 @@ dagger.#Plan & {
           }
         ]
       }
-      dir: core.#Subdir & {
-        input: image.output.rootfs
+      _dir: core.#Subdir & {
+        input: _image.output.rootfs
         path: "dist"
       }
-      output: dir.output
+      output: _dir.output
+    }
+    test: {
+      _image: docker.#Build & {
+        steps: [
+          docker.#Copy & {
+            input: image.output
+            contents: build.output
+            dest: "dist"
+          },
+          docker.#Run & {
+            command: {
+              name: "pip3"
+              args: ["install", "dist/exodide-*.whl"]
+            }
+          }
+        ]
+      }
     }
   }
 }
