@@ -53,7 +53,7 @@ dagger.#Plan & {
       dist: _dist.output
       _output: docker.#Copy & {
         input: image.output
-        contents: _image.output
+        contents: _image.output.rootfs
         exclude: ["numpy", "cpython", "pyodide", "script", "Makefile",
                   "build", "dist", ".git"]
       }
