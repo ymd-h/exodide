@@ -15,7 +15,7 @@ jobs:
           cmds: |
             project init
             project update
-            do build
+            do test
       - uses: actions/upload-artifact@v3
         with:
           name: wheel
