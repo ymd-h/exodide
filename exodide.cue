@@ -46,12 +46,18 @@ dagger.#Plan & {
           }
         ]
       }
-      _dir: core.#Subdir & {
+      _dist: core.#Subdir & {
         input: _image.output.rootfs
         path: "dist"
       }
-      dist: _dir.output
-      output: _image.output
+      dist: _dist.output
+      _output: docker.#Copy & {
+        input: image.output
+        contents: _image.output
+        exclude: ["numpy", "cpython", "pyodide", "script", "Makefile",
+                  "build", "dist", ".git"]
+      }
+      output: _output.output
     }
     test: {
       _image: docker.#Build & {
