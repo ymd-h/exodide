@@ -57,7 +57,7 @@ dagger.#Plan & {
       _image: docker.#Build & {
         steps: [
           docker.#Run & {
-            input: image.output
+            input: build.output
             command: {
               name: "python3"
               args: ["-m", "unittest", "discover", "test"]
