@@ -14,7 +14,7 @@ dagger.#Plan & {
         exclude: [".git", ".github", "cue.mod", "*.cue", "dist", "build", "example"]
       }
     }
-    "dist": write: contents: actions.build.output
+    "dist": write: contents: actions.build.dist
   }
   actions: {
     image: docker.#Dockerfile & {
@@ -37,6 +37,12 @@ dagger.#Plan & {
               name: "python3"
               args: ["setup.py", "bdist_wheel"]
             }
+          },
+          docker.#Run & {
+            command: {
+              name: "pip3"
+              args: ["install", "."]
+            }
           }
         ]
       }
@@ -44,20 +50,16 @@ dagger.#Plan & {
         input: _image.output.rootfs
         path: "dist"
       }
-      output: _dir.output
+      dist: _dir.output
+      output: _image.output
     }
     test: {
       _image: docker.#Build & {
         steps: [
-          docker.#Copy & {
-            input: image.output
-            contents: build.output
-            dest: "dist"
-          },
           docker.#Run & {
             command: {
-              name: "sh"
-              args: ["-c 'pip3 install exodide-*.whl'"]
+              name: "python3"
+              args: ["-m", "unittest", "discover", "test"]
             }
           }
         ]
