@@ -56,8 +56,9 @@ dagger.#Plan & {
           },
           docker.#Run & {
             command: {
-              name: "pip3"
-              args: ["install", "dist/exodide-*.whl"]
+              name: "find"
+              args: ["dist", "-name" "exodide-*.whl",
+                     "-exec", "pip3 install {} \;"]
             }
           }
         ]
