@@ -15,7 +15,7 @@ jobs:
           tags: exodide/results:${{github.ref_name}}
           cache-to: type=gha,mode=max,scope=${{github.ref_name}}
           cache-from: type=gha,scope=${{github.ref_name}}
-          outputs: type=image,name=exodide/results:${{github.ref_name}}
+          outputs: type=image,name=exodide/results:${{github.ref_name}},push=false
       - run: |
           docker create --name results exodide/results:$GITHUB_REF_NAME
           docker cp results:/dist/. dist/
