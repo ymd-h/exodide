@@ -44,8 +44,8 @@ RUN CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
 
 
 FROM pyodide-node AS example-test
-ADD --from=build /dist/exodide-*.whl /dist/exodide.whl
-ADD --from=example-build /dist/exodide_example-*.whl /dist/exodide_example.whl
+COPY --from=build /dist/exodide-*.whl /dist/exodide.whl
+COPY --from=example-build /dist/exodide_example-*.whl /dist/exodide_example.whl
 ADD example/test.js example/test_example.py /example
 WORKDIR /
 RUN http-server / &; \
