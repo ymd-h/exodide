@@ -59,11 +59,10 @@ RUN npm i pyodide@0.21.0-alpha.2 && \
 
 
 FROM pyodide-node AS example-test
-COPY --from=build /dist/exodide-*.whl /pyodide-node/dist/exodide.whl
-COPY --from=example-build \
-    /dist/exodide_example-*.whl /pyodide-node/dist/exodide_example.whl
+COPY --from=build /dist /pyodide-node/dist/
+COPY --from=example-build /dist /pyodide-node/dist/
 COPY example/test.mjs example/test_example.py example/run.sh /pyodide-node/example/
-RUN bash ./example/run.sh /pyodide-node && \
+RUN ls -l dist && bash ./example/run.sh /pyodide-node && \
     touch /example-test
 
 
