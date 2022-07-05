@@ -2,7 +2,7 @@ From python:3.10.2 AS base
 ENV EMSCRIPTEN_VERSION=3.1.13 \
     PATH=$PATH:/emsdk/upstream/emscripten
 RUN apt update && \
-    apt install --no-install-recommends -y build-essential && \
+    apt install --no-install-recommends -y build-essential gfortran && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
     git clone --depth 1 https://github.com/emscripten-core/emsdk.git /emsdk && \
