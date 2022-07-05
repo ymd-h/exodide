@@ -1,11 +1,6 @@
 From python:3.10.2 AS base
-ENV EMSCRIPTEN_VERSION=3.1.13 \
-    PATH=$PATH:/emsdk/upstream/emscripten
-RUN apt update && \
-    apt install --no-install-recommends -y build-essential gfortran f2c && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    git clone --depth 1 https://github.com/emscripten-core/emsdk.git /emsdk && \
+ENV EMSCRIPTEN_VERSION=3.1.13
+RUN git clone --depth 1 https://github.com/emscripten-core/emsdk.git /emsdk && \
     cd /emsdk && \
     git pull && \
     ./emsdk install ${EMSCRIPTEN_VERSION} && \
@@ -14,27 +9,38 @@ RUN apt update && \
 
 
 FROM node:latest AS pyodide-node
-RUN npm i -g pyodide@0.21.0-alpha.2 http-server
+RUN npm i -g pyodide@0.21.0-alpha.2 http-server && \
+    curl -LO https://github.com/pyodide/pyodide/releases/download/0.21.0a2/pyodide-build-0.21.0a2.tar.bz2 && \
+    tar xvf pyodide-build-0.21.0a2.tar.bz2 && \
+    rm -f pyodide-build-0.21.0a2.tar.bz2
 
 
 FROM base AS build
-ADD Makefile exodide numpy cpython pyodide script /exodide/
+SHELL ["/bin/bash", "-c"]
+COPY Makefile /exodide/
+COPY exodide  /exodide/exodide/
+COPY numpy    /exodide/numpy/
+COPY cpython  /exodide/cpython/
+COPY pyodide  /exodide/pyodide/
+COPY script   /exodide/script/
 WORKDIR /exodide
-RUN make && rm -rf numpy cpython pyodide script && rm -f Makefile
-ADD setup.py README.md LICENSE /exodide/
+RUN source /emsdk/emsdk_env.sh && \
+    make && rm -rf numpy cpython pyodide script && rm -f Makefile
+COPY setup.py README.md LICENSE /exodide/
 RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
 
 
 FROM base AS exodide
-COPY --from=build /dist /dist
+SHELL ["/bin/bash", "-c"]
+COPY --from=build /dist /dist/
 RUN pip3 install /dist/* && rm -rf /dist
 
 
 FROM exodide AS test
-ADD test /test
+COPY test /test/
 WORKDIR /test
-RUN pip3 install coverage unittest-xml-reporting && \
-    coverage run -m unittest discover . && \
+RUN pip3 install coverage unittest-xml-reporting numpy && \
+    coverage run -m xmlrunner discover . && \
     coverage report && \
     mkdir -p /coverage/html && coverage html -d /coverage/html && \
     mkdir -p /coverage/xml && cp *.xml /coverage/xml/ && \
@@ -42,20 +48,25 @@ RUN pip3 install coverage unittest-xml-reporting && \
 
 
 FROM exodide AS example-build
-ADD example /example
+COPY example/setup.py /example/
+COPY example/pybind11 /example/pybind11/
+COPY example/exodide_example /example/exodide_example/
 WORKDIR /example
-RUN CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
+RUN source /emsdk/emsdk_env.sh && \
+    CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
 
 
 FROM pyodide-node AS example-test
 COPY --from=build /dist/exodide-*.whl /dist/exodide.whl
 COPY --from=example-build /dist/exodide_example-*.whl /dist/exodide_example.whl
-ADD example/test.js example/test_example.py /example/
+COPY example/test.mjs example/test_example.py example/run.sh /example/
 WORKDIR /
-RUN http-server / &; \
-    node --experimental-repl-await test.js
+RUN bash /example/run.sh / && \
+    touch /example-test
 
 
 FROM scratch AS result
-COPY --from=build /dist/exodide-*whl /dist/
-COPY --from=test /coverage /coverage
+COPY --from=build /dist /dist/
+COPY --from=test /coverage /coverage/
+COPY --from=example-test /example-test /example-test
+CMD [""]
