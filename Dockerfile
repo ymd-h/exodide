@@ -50,7 +50,7 @@ RUN source /emsdk/emsdk_env.sh && \
 
 
 FROM node:latest AS pyodide-node
-WORKDIR /
+WORKDIR /pyodide-node
 RUN npm i pyodide@0.21.0-alpha.2 http-server && \
     curl -LO https://github.com/pyodide/pyodide/releases/download/0.21.0a2/pyodide-build-0.21.0a2.tar.bz2 && \
     tar xvf pyodide-build-0.21.0a2.tar.bz2 && \
@@ -58,11 +58,11 @@ RUN npm i pyodide@0.21.0-alpha.2 http-server && \
 
 
 FROM pyodide-node AS example-test
-COPY --from=build /dist/exodide-*.whl /dist/exodide.whl
-COPY --from=example-build /dist/exodide_example-*.whl /dist/exodide_example.whl
-COPY example/test.mjs example/test_example.py example/run.sh /example/
-WORKDIR /
-RUN bash /example/run.sh / && \
+COPY --from=build /dist/exodide-*.whl /pyodide-node/dist/exodide.whl
+COPY --from=example-build \
+    /dist/exodide_example-*.whl /pyodide-node/dist/exodide_example.whl
+COPY example/test.mjs example/test_example.py example/run.sh /pyodide-node/example/
+RUN ./example/run.sh / && \
     touch /example-test
 
 
