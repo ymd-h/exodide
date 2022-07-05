@@ -1,14 +1,10 @@
 #!/usr/bin/bash
 
-set -eux
+set -eu
 
-http-server @1 &
+http-server $1 &
 server_id=$!
 
-echo $(npm root -g)
-node -e "console.log(global.module.paths)"
-ls /node_modules
-
-node /example/test.mjs
+node /pyodide-node/example/test.mjs
 
 kill $server_id
