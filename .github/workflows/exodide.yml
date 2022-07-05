@@ -41,7 +41,6 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-          cache: 'pip'
       - run: pip install twine
       - name: Upload to PyPI
         run: python -m twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} --skip-existing dist/exodide-*.whl
