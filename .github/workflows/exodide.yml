@@ -12,11 +12,11 @@ jobs:
         with:
           context: .
           push: false
-          tags: exodide/results:${{GITHUB_REF_NAME}}
-          cache-to: type=gha,mode=max,scope=${{GITHUB_REF_NAME}}
-          cache-from: type=gha,scope=${{GITHUB_REF_NAME}}
+          tags: exodide/results:$GITHUB_REF_NAME
+          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME
+          cache-from: type=gha,scope=$GITHUB_REF_NAME
       - run: |
-          docker create --name results exodide/results:${{GITHUB_REF_NAME}}
+          docker create --name results exodide/results:$GITHUB_REF_NAME
           docker cp results:/dist dist
           docker cp results:/coverage coverage
         name: Extract Results
