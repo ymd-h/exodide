@@ -8,13 +8,6 @@ RUN git clone --depth 1 https://github.com/emscripten-core/emsdk.git /emsdk && \
     rm -rf /emsdk/.git
 
 
-FROM node:latest AS pyodide-node
-RUN npm i -g pyodide@0.21.0-alpha.2 http-server && \
-    curl -LO https://github.com/pyodide/pyodide/releases/download/0.21.0a2/pyodide-build-0.21.0a2.tar.bz2 && \
-    tar xvf pyodide-build-0.21.0a2.tar.bz2 && \
-    rm -f pyodide-build-0.21.0a2.tar.bz2
-
-
 FROM base AS build
 SHELL ["/bin/bash", "-c"]
 COPY Makefile /exodide/
@@ -54,6 +47,14 @@ COPY example/exodide_example /example/exodide_example/
 WORKDIR /example
 RUN source /emsdk/emsdk_env.sh && \
     CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
+
+
+FROM node:latest AS pyodide-node
+WORKDIR /
+RUN npm i pyodide@0.21.0-alpha.2 http-server && \
+    curl -LO https://github.com/pyodide/pyodide/releases/download/0.21.0a2/pyodide-build-0.21.0a2.tar.bz2 && \
+    tar xvf pyodide-build-0.21.0a2.tar.bz2 && \
+    rm -f pyodide-build-0.21.0a2.tar.bz2
 
 
 FROM pyodide-node AS example-test
