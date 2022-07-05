@@ -1,7 +1,11 @@
 From python:3.10.2 AS base
 ENV EMSCRIPTEN_VERSION=3.1.13 \
     PATH=$PATH:/emsdk/upstream/emscripten
-RUN git clone --depth 1 https://github.com/emscripten-core/emsdk.git /emsdk && \
+RUN apt update && \
+    apt install --no-install-recommends -y build-essential && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    git clone --depth 1 https://github.com/emscripten-core/emsdk.git /emsdk && \
     cd /emsdk && \
     git pull && \
     ./emsdk install ${EMSCRIPTEN_VERSION} && \
