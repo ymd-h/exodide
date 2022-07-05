@@ -32,16 +32,15 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: ci
+    if: github.event_name == 'push' && startsWith(github.event.ref,'refs/tags/v')
     steps:
       - uses: actions/download-artifact@v3
         with:
           name: wheel
           path: dist
-      - run: ls -l dist
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       - run: pip install twine
       - name: Upload to PyPI
         run: python -m twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} --skip-existing dist/exodide-*.whl
-        if: github.event_name == 'push' && startsWith(github.event.ref,'refs/tags/v')
