@@ -14,10 +14,10 @@ RUN npm i -g pyodide@0.21.0-alpha.2 http-server
 
 
 FROM base AS build
-ADD Makefile exodide numpy cpython pyodide script /exodide
+ADD Makefile exodide numpy cpython pyodide script /exodide/
 WORKDIR /exodide
 RUN make && rm -rf numpy cpython pyodide script && rm -f Makefile
-ADD setup.py README.md LICENSE
+ADD setup.py README.md LICENSE /exodide/
 RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
 
 
@@ -46,7 +46,7 @@ RUN CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
 FROM pyodide-node AS example-test
 COPY --from=build /dist/exodide-*.whl /dist/exodide.whl
 COPY --from=example-build /dist/exodide_example-*.whl /dist/exodide_example.whl
-ADD example/test.js example/test_example.py /example
+ADD example/test.js example/test_example.py /example/
 WORKDIR /
 RUN http-server / &; \
     node --experimental-repl-await test.js
