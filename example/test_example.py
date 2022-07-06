@@ -3,11 +3,11 @@ import unittest
 base = "http://localhost:8080/dist/"
 
 import micropip
-await micropip.install(base + "exodide-0.0.3-py3-none-any.whl")
+await micropip.install(base + "<exodide>")
 
 
 from exodide.install import fetch_install
-await fetch_install(base + "exodide_example-0.0.0-cp310-cp310-emscripten_wasm32.whl")
+await fetch_install(base + "<example>")
 
 import exodide_example as ee
 

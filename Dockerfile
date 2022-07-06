@@ -59,10 +59,15 @@ RUN npm i pyodide@0.21.0-alpha.2 && \
 
 
 FROM pyodide-node AS example-test
-COPY --from=build /dist /pyodide-node/dist/
-COPY --from=example-build /dist /pyodide-node/dist/
+ENV DIST=/pyodide-node/dist/
+COPY --from=build /dist $DIST
+COPY --from=example-build /dist $DIST
 COPY example/test.mjs example/test_example.py example/run.sh /pyodide-node/example/
-RUN ls -l dist && bash ./example/run.sh /pyodide-node && \
+RUN sed -i \
+    -e s/"<exodide>"/$(find $DIST -name "exodide-*.whl" -exec basename {} \;)/ \
+    -e s/"<example>"/$(find $DIST -name "*_example-*.whl" -exec basename {} \;)/\
+    example/test_example.py && \
+    bash ./example/run.sh /pyodide-node && \
     touch /example-test
 
 
