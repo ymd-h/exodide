@@ -32,6 +32,9 @@ Since Pyodide is built with Python 3.10, we only prepare headers for
 the version. Your custom package must run on Python 3.10.
 
 ### 2.2 Build with exodide
+To build custom extension, you also need `wheel` package, which can be
+installed by `pip install exodide[build]`.
+
 
 ```python:setup.py
 from setuptools import setup
@@ -78,6 +81,9 @@ import your_package
 ```
 
 ### 2.4 Inspect Shared Object (for Debugging)
+Fot inspect, `numpy` is also required, and you can install with
+`pip install exodide[inspect]`.
+
 
 ```shell
 python3 -m exodide.inspect your-package/your-module.so
