@@ -6,7 +6,7 @@ from exodide import build
 include = os.path.join(os.path.dirname(__file__), "pybind11", "include")
 
 setup(name="exodide-example",
-      version="0.0.0",
+      version="0.0.1",
       packages=find_packages(),
       cmdclass=build.cmdclass(),
       ext_modules=[Extension("exodide_example.example",
