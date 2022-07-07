@@ -13,8 +13,8 @@ jobs:
           context: .
           push: false
           tags: exodide/results:latest
-          cache-to: type=gha,mode=max,scope=${{github.ref_name}}
-          cache-from: type=gha,scope=${{github.ref_name}}
+          cache-to: type=gha,mode=max,scope=exodide
+          cache-from: type=gha,scope=exodide
           load: true
       - run: |
           docker create --name results exodide/results:latest
