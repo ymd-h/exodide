@@ -1,1 +1,1 @@
-from .example import hello_world
+from .example import hello_world, add_int, fibonacci
