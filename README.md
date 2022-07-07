@@ -64,6 +64,10 @@ compiler by `__EMSCRIPTEN__` macro ([ref](https://emscripten.org/docs/compiling/
 ```
 
 ### 2.3 Install to Pyodide
+> **Warning**
+> exodide doesn't check any wheel compatibility, so that user must take care.
+
+
 ```javascript
 const pyodide = await loadPyodide();
 
