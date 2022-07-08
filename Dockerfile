@@ -8,7 +8,7 @@ RUN git clone --depth 1 https://github.com/emscripten-core/emsdk.git /emsdk && \
     rm -rf /emsdk/.git
 
 
-FROM base AS build
+FROM base AS build-base
 SHELL ["/bin/bash", "-c"]
 COPY Makefile /exodide/
 COPY exodide  /exodide/exodide/
@@ -19,7 +19,15 @@ COPY script   /exodide/script/
 WORKDIR /exodide
 RUN source /emsdk/emsdk_env.sh && \
     make && rm -rf numpy cpython pyodide script && rm -f Makefile
+
+
+FROM build-base AS build
 COPY setup.py README.md LICENSE /exodide/
+RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
+
+
+FROM build-base AS build-no-readme
+COPY setup.py LICENSE /exodide/
 RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
 
 
@@ -29,7 +37,14 @@ COPY --from=build /dist /dist/
 RUN pip3 install /dist/* wheel && rm -rf /dist
 
 
-FROM exodide AS test
+FROM base AS exodide-no-readme
+SHELL ["/bin/bash", "-c"]
+COPY --from=build /dist /dist/
+RUN pip3 install /dist/* wheel && rm -rf /dist
+
+
+
+FROM exodide-no-readme AS test
 COPY test /test/
 WORKDIR /test
 RUN pip3 install coverage unittest-xml-reporting numpy && \
@@ -40,7 +55,7 @@ RUN pip3 install coverage unittest-xml-reporting numpy && \
     rm -rf /test
 
 
-FROM exodide AS example-build
+FROM exodide-no-readme AS example-build
 COPY example/setup.py /example/
 COPY example/pybind11 /example/pybind11/
 COPY example/exodide_example /example/exodide_example/
