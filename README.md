@@ -22,18 +22,43 @@ C/C++-extension packages on Pyodide.
 
 ## 2. Usage
 
-### 2.1 Prerequest
-To build C/C++ to WebAssembly, you need
-[Emscripten](https://emscripten.org/). We assume you set up `emcc` and
-`em++` commands as
-[the official document](https://emscripten.org/docs/getting_started/downloads.html).
+### 2.1 Requirement Summary
 
-Since Pyodide is built with Python 3.10, we only prepare headers for
-the version. Your custom package must run on Python 3.10.
+* 2.3: Build
+  * [Emscripten](https://emscripten.org/) v3.1.13
+  * [wheel](https://github.com/pypa/wheel)
+  * C/C++ package source working on CPython 3.10.2
+* 2.4: Run
+  * Pyodide v0.21.0a2
+* 2.5: Inspect
+  * [NumPy](https://numpy.org/)
 
-### 2.2 Build with exodide
-To build custom extension, you also need `wheel` package, which can be
-installed by `pip install exodide[build]`.
+
+### 2.2 Install exodide
+
+You can install exodide from [PyPI](https://pypi.org/project/exodide/)
+
+* `pip install exodide`
+  * Only exodide
+* `pip install exodide[build]`
+  * With wheel
+* `pip install exodide[inspect]`
+  * With NumPy
+* `pip install exodide[all]`
+  * With NumPy and wheel
+
+
+Since this repository doesn't contains patched headers, you cannot
+install directly from GitHub like `pip install git+https://github.com/ymd-h/exodide`.
+Please read [4. Build exodide](https://github.com/ymd-h/exodide#4-build-exodide).
+
+### 2.3 Build with exodide
+The followings are reuired;
+
+* Emscripten v3.1.13
+  * Set up `emcc` and `em++` as [the official document](https://emscripten.org/docs/getting_started/downloads.html)
+* C/C++ extension package source working on Python 3.10
+* `wheel` (`pip install exodide[build]` install it, too.)
 
 
 ```python:setup.py
@@ -63,10 +88,12 @@ compiler by `__EMSCRIPTEN__` macro ([ref](https://emscripten.org/docs/compiling/
 #endif
 ```
 
-### 2.3 Install to Pyodide
+### 2.4 Install extension package to Pyodide
 > **Warning**
 > exodide doesn't check any wheel compatibility, so that user must take care.
 
+
+Pyodide v0.21a2 is required.
 
 ```javascript
 const pyodide = await loadPyodide();
@@ -84,7 +111,7 @@ import your_package
 `);
 ```
 
-### 2.4 Inspect Shared Object (for Debugging)
+### 2.5 Inspect Shared Object (for Debugging)
 Fot inspect, `numpy` is also required, and you can install with
 `pip install exodide[inspect]`.
 
