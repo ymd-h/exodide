@@ -73,6 +73,7 @@ RUN sed -i \
 
 FROM scratch AS result
 COPY --from=build /dist /dist/
+COPY --from=example-build /dist /dist/
 COPY --from=test /coverage /coverage/
 COPY --from=example-test /example-test /example-test
 CMD [""]
