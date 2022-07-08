@@ -6,10 +6,10 @@ RUN git clone --depth 1 https://github.com/emscripten-core/emsdk.git /emsdk && \
     ./emsdk install ${EMSCRIPTEN_VERSION} && \
     ./emsdk activate ${EMSCRIPTEN_VERSION} && \
     rm -rf /emsdk/.git
+SHELL ["/bin/bash", "-c"]
 
 
 FROM base AS build-base
-SHELL ["/bin/bash", "-c"]
 COPY Makefile /exodide/
 COPY exodide  /exodide/exodide/
 COPY numpy    /exodide/numpy/
@@ -19,7 +19,6 @@ COPY script   /exodide/script/
 WORKDIR /exodide
 RUN source /emsdk/emsdk_env.sh && \
     make && rm -rf numpy cpython pyodide script && rm -f Makefile
-SHELL ["/bin/bash", "-c"]
 
 
 FROM build-base AS build
