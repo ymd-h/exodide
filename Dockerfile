@@ -19,6 +19,7 @@ COPY script   /exodide/script/
 WORKDIR /exodide
 RUN source /emsdk/emsdk_env.sh && \
     make && rm -rf numpy cpython pyodide script && rm -f Makefile
+SHELL ["/bin/bash", "-c"]
 
 
 FROM build-base AS build
@@ -32,13 +33,11 @@ RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
 
 
 FROM base AS exodide
-SHELL ["/bin/bash", "-c"]
 COPY --from=build /dist /dist/
 RUN pip3 install /dist/* wheel && rm -rf /dist
 
 
 FROM base AS exodide-no-readme
-SHELL ["/bin/bash", "-c"]
 COPY --from=build /dist /dist/
 RUN pip3 install /dist/* wheel && rm -rf /dist
 
