@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>example with PyScript</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+  </head>
+  <body>
+    <py-env>
+      - exodide
+    </py-env>
+    <py-script>
+      # asyncio
+      from exodide.install import fetch_install
+      await fetch_install("dist/exodide_example-0.0.1-cp310-cp310-emscripten_wasm32.whl")
+      import exodide_example as ee
+
+      ee.hello_world()
+
+      pyscript.write(f"5 + 7 = {ee.add_int(5, 7)}")
+      pyscript.write(f"fibonacci(5) = {ee.fibonacci(5)}")
+    </py-script>
+  </body>
+</html>
