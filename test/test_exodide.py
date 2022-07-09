@@ -14,7 +14,7 @@ class TestBuild(unittest.TestCase):
         self.assertIsInstance(build.system_include(), str)
         self.assertEqual(build.system_include(), build.system_include())
         self.assertEqual(build.system_include(),
-                         os.path.join(sys.path, "include", "python"))
+                         os.path.join(sys.prefix, "include", "python"))
 
     def test_exodide_include(self):
         self.assertIsInstance(build.exodide_include(), list)
