@@ -18,11 +18,37 @@ from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 def system_include():
     return os.path.join(sys.prefix, "include", "python")
 
-def cpython_get_include() -> str:
-    return f"{os.path.dirname(__file__)}/cpython"
 
-def numpy_get_include() -> str:
-    return f"{os.path.dirname(__file__)}/numpy"
+def exodide_include() -> List[str]:
+    """
+    Get exodide include directories
+
+    Returns
+    -------
+    list of str
+        Include directories in exodide package
+    """
+    dirname = os.path.dirname(__file__)
+    return [os.path.join(dirname, "cpython"),
+            os.path.join(dirname, "numpy")]
+
+
+def adjust_include(include: List[str]) -> List[str]:
+    """
+    Adjust include list
+
+    Parameters
+    ----------
+    include : list of str
+        Original include directories
+
+    Returns
+    -------
+    list of str
+        Adjusted include directories
+    """
+    s = system_include()
+    return exodide_include() + [I for I in include if (s not in I)]
 
 
 def LDFLAGS() -> List[str]:
@@ -56,10 +82,7 @@ class build(_build):
 
 class build_ext(_build_ext):
     def run(self):
-        self.include_dirs = [
-            cpython_get_include(),
-            numpy_get_include()
-        ] + [d for d in self.include_dirs if (system_include() not in d)]
+        self.include_dirs = adjust_include(self.include_dirs)
 
         for ext in self.extensions:
             ext.extra_link_args = ext.extra_link_args + LDFLAGS()
