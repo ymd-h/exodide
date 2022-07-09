@@ -24,7 +24,7 @@ class TestBuild(unittest.TestCase):
                          ["cpython", "numpy"])
 
     def test_adjust_include(self):
-        self.assertEqual(build.adjust_include(build.system_include()),
+        self.assertEqual(build.adjust_include([build.system_include()]),
                          build.exodide_include())
 
     def test_plat_name(self):
