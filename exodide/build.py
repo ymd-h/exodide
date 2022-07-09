@@ -141,5 +141,20 @@ class build_ext(_build_ext):
 
 
 def cmdclass() -> Dict[str, Command]:
+    """
+    Get command classes for exodide
+
+    Returns
+    -------
+    dict
+       Command definitions
+
+    Examples
+    --------
+    >>> from setuptools import setup
+    >>> from exodide import build
+    >>> setup(...,
+    ...       cmdclass=build.cmdclass())
+    """
     return {"build": build,
             "build_ext": build_ext}
