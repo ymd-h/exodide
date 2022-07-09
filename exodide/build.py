@@ -15,7 +15,15 @@ from distutils.command.build import build as _build
 from setuptools.command.build_ext import build_ext as _build_ext
 from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 
-def system_include():
+def system_include() -> str:
+    """
+    Get system include directory
+
+    Returns
+    -------
+    str
+        Include directory of host Python
+    """
     return os.path.join(sys.prefix, "include", "python")
 
 
