@@ -77,14 +77,14 @@ def exodide_links() -> List[str]:
             "-s", "SIDE_MODULE=1"]
 
 
-def exodide_prohibited_links() -> List[str]:
+def exodide_unsupported_links() -> List[str]:
     """
-    Get exodide prohibit link args
+    Get exodide unsupported link args
 
     Returns
     -------
     list of str
-        Prohibited link arguments for exodide
+        Unsupported link arguments for exodide
     """
     return ["-shared", "-pthread"]
 
@@ -130,9 +130,9 @@ class build_ext(_build_ext):
         return super().run()
 
     def build_extensions(self):
-        prohibit = exodide_prohibited_links()
+        remove_opt = exodide_unsupported_links()
         self.compiler.linker_so = [so for so in self.compiler.linker_so
-                                   if (so not in prohibit)]
+                                   if (so not in remove_opt)]
         return super().build_extensions()
 
     def get_ext_filename(self, ext_name):
