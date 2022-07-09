@@ -69,7 +69,7 @@ from exodide import build
 
 setup(
     # omit
-    cmdclass=build.cmdclass(), # {'build': exodide.build, 'build_ext': exodide.build_ext}
+    cmdclass=build.cmdclass(), # {'build': build.build, 'build_ext': build.build_ext}
 )
 ```
 
