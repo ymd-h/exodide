@@ -44,3 +44,27 @@ jobs:
       - run: pip install twine
       - name: Upload to PyPI
         run: python -m twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} --skip-existing dist/exodide-*.whl
+  publish-image:
+    runs-on: ubuntu-latest
+    needs: ci
+    if: github.event_name == 'push' && startsWith(github.event.ref,'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+      - uses: docker/setup-buildx-action@v2
+      - uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/exodide:${{github.ref_name}}
+            ghcr.io/${{ github.repository_owner }}/exodide:latest
+          cache-to: type=gha,mode=max,scope=exodide
+          cache-from: type=gha,scope=exodide
+          target: exodide
