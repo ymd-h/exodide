@@ -11,7 +11,6 @@ SHELL ["/bin/bash", "-c"]
 
 FROM base AS build-base
 COPY Makefile /exodide/
-COPY exodide  /exodide/exodide/
 COPY numpy    /exodide/numpy/
 COPY cpython  /exodide/cpython/
 COPY pyodide  /exodide/pyodide/
@@ -21,13 +20,17 @@ RUN source /emsdk/emsdk_env.sh && \
     make && rm -rf numpy cpython pyodide script && rm -f Makefile
 
 
-FROM build-base AS build
-COPY setup.py README.md LICENSE /exodide/
+FROM build-base AS build-pre
+COPY exodide  /exodide/exodide/
+COPY setup.py LICENSE /exodide/
+
+
+FROM build-pre AS build
+COPY README.md /exodide/
 RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
 
 
-FROM build-base AS build-no-readme
-COPY setup.py LICENSE /exodide/
+FROM build-pre AS build-no-readme
 RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
 
 
