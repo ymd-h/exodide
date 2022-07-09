@@ -59,7 +59,15 @@ def adjust_include(include: List[str]) -> List[str]:
     return exodide_include() + [I for I in include if (s not in I)]
 
 
-def LDFLAGS() -> List[str]:
+def exodide_links() -> List[str]:
+    """
+    Get exodide link args
+
+    Returns
+    -------
+    list of str
+        Link arguments for exodide
+    """
     return ["-s", "MODULARIZE=1",
             "-s", "LINKABLE=1",
             "-s", "EXPORT_ALL=1",
@@ -93,7 +101,7 @@ class build_ext(_build_ext):
         self.include_dirs = adjust_include(self.include_dirs)
 
         for ext in self.extensions:
-            ext.extra_link_args = ext.extra_link_args + LDFLAGS()
+            ext.extra_link_args = ext.extra_link_args + exodide_links()
         return super().run()
 
     def build_extensions(self):
