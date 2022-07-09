@@ -77,6 +77,18 @@ def exodide_links() -> List[str]:
             "-s", "SIDE_MODULE=1"]
 
 
+def exodide_prohibited_links() -> List[str]:
+    """
+    Get exodide prohibit link args
+
+    Returns
+    -------
+    list of str
+        Prohibited link arguments for exodide
+    """
+    return ["-shared", "-pthread"]
+
+
 def plat_name() -> str:
     """
     Platform name tag for wheel
