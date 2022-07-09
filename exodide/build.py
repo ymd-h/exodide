@@ -35,6 +35,14 @@ def LDFLAGS() -> List[str]:
 
 
 def plat_name() -> str:
+    """
+    Platform name tag for wheel
+
+    Returns
+    -------
+    str
+        platform tag
+    """
     return "emscripten-wasm32"
 
 
