@@ -4,6 +4,10 @@ import platform
 from exodide import build, inspect
 
 class TestBuild(unittest.TestCase):
+    def cmdclass(self):
+        self.assertEqual(build.cmdclass(),
+                         {"build": build.build, "build_ext": build.build_ext})
+
     def test_plat_name(self):
         self.assertEqual(build.plat_name(), "emscripten-wasm32")
 
