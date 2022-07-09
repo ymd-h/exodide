@@ -102,6 +102,11 @@ def plat_name() -> str:
 
 
 class build(_build):
+    """
+    Build Command for exodide
+
+      * Replace platform name of wheel
+    """
     def finalize_options(self):
         with mock.patch("distutils.command.build.get_platform") as get_platform:
             get_platform.return_value = plat_name()
@@ -109,6 +114,14 @@ class build(_build):
 
 
 class build_ext(_build_ext):
+    """
+    Build Extension Command for exodide
+
+      * Remove system Python from include directory
+      * Add exodide Python and NumPy to include directory
+      * Add linker options for Emscripten
+      * Remove not supported linker options
+    """
     def run(self):
         self.include_dirs = adjust_include(self.include_dirs)
 
