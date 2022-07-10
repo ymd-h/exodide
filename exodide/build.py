@@ -101,6 +101,24 @@ def exodide_platform_tag() -> str:
     return "emscripten-wasm32"
 
 
+def exodide_extension_filename(ext_name: str) -> str:
+    """
+    Extention file name
+
+    Parameters
+    ----------
+    ext_name : str
+        Extension module name
+
+    Returns
+    -------
+    str
+        Extension file name
+    """
+    ext_path = ext_name.split(".")
+    return os.path.join(*ext_path) + ".cpython-310-wasm32-emscripten.so"
+
+
 class build(_build):
     """
     Build Command for exodide
@@ -136,8 +154,7 @@ class build_ext(_build_ext):
         return super().build_extensions()
 
     def get_ext_filename(self, ext_name):
-        ext_path = ext_name.split('.')
-        return os.path.join(*ext_path) + ".cpython-310-wasm32-emscripten.so"
+        return exodide_extension_filename(ext_name)
 
 
 def cmdclass() -> Dict[str, Command]:
