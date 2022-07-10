@@ -61,7 +61,7 @@ COPY example/pybind11 /example/pybind11/
 COPY example/exodide_example /example/exodide_example/
 WORKDIR /example
 RUN source /emsdk/emsdk_env.sh && \
-    CC=emcc CXX=em++ python3 setup-cmdless.py --command-packages=exodide.build \
+    CC=emcc CXX=em++ python3 setup-cmdless.py --command-packages exodide.build \
     exodide_wheel -d /dist && \
     rm -rf /example
 
@@ -101,9 +101,23 @@ RUN sed -i \
     touch /example-test
 
 
+FROM pyodide-node AS example-cmdless-test
+ENV DIST=/pyodide-node/dist/ TEST=example/test
+COPY --from=build /dist $DIST
+COPY --from=example-cmdless-build /dist $DIST
+COPY ${TEST}/test.mjs ${TEST}/test_example.py ${TEST}/run.sh /pyodide-node/example/
+RUN sed -i \
+    -e s/"<exodide>"/$(find $DIST -name "exodide-*.whl" -exec basename {} \;)/ \
+    -e s/"<example>"/$(find $DIST -name "*_example-*.whl" -exec basename {} \;)/\
+    example/test_example.py && \
+    bash ./example/run.sh /pyodide-node && \
+    touch /example-cmdless-test
+
+
 FROM scratch AS result
 COPY --from=build /dist /dist/
 COPY --from=example-build /dist /dist/
 COPY --from=test /coverage /coverage/
 COPY --from=example-test /example-test /example-test
+COPY --from=example-cmdless-test /example-cmdless-test /example-cmdless-test
 CMD [""]
