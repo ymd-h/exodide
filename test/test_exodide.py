@@ -1,3 +1,4 @@
+import glob
 import unittest
 import os
 import platform
@@ -40,7 +41,12 @@ class TestInstall(unittest.TestCase):
 
 
 class TestInspect(unittest.TestCase):
-    pass
+    def test_metadata(self):
+        so = glob.glob("/example/exdodede_example/*.so")
+        self.assertIsInstance(so, list)
+        self.assertEqual(len(so), 1)
+        meta = inspect.Metadata(so[0])
+        self.assertTrue(meta.valid)
 
 
 if __name__ == "__main__":

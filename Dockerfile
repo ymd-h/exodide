@@ -47,8 +47,10 @@ RUN pip3 install /dist/* wheel && rm -rf /dist
 
 FROM exodide-no-readme AS test
 COPY test .coveragerc /test/
+COPY --from=example-build /dist /example/
 WORKDIR /test
-RUN pip3 install coverage unittest-xml-reporting numpy && \
+RUN unzip /example/*.whl && \
+    pip3 install coverage unittest-xml-reporting numpy && \
     coverage run -m xmlrunner discover . && \
     coverage report && \
     mkdir -p /coverage/html && coverage html -d /coverage/html && \
