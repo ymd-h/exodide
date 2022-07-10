@@ -55,6 +55,17 @@ RUN source /emsdk/emsdk_env.sh && \
     CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
 
 
+FROM exodide-no-readme AS  example-cmdless-build
+COPY example/setup-cmdless.py /example/
+COPY example/pybind11 /example/pybind11/
+COPY example/exodide_example /example/exodide_example/
+WORKDIR /example
+RUN source /emsdk/emsdk_env.sh && \
+    CC=emcc CXX=em++ python3 setup-cmdless.py --command-packages=exodide.build \
+    exodide_wheel -d /dist && \
+    rm -rf /example
+
+
 FROM exodide-no-readme AS test
 COPY test .coveragerc /test/
 COPY --from=example-build /dist /example/
