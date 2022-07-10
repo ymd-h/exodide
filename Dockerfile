@@ -44,6 +44,14 @@ COPY --from=build /dist /dist/
 RUN pip3 install /dist/* wheel && rm -rf /dist
 
 
+FROM exodide-no-readme AS example-build
+COPY example/setup.py /example/
+COPY example/pybind11 /example/pybind11/
+COPY example/exodide_example /example/exodide_example/
+WORKDIR /example
+RUN source /emsdk/emsdk_env.sh && \
+    CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
+
 
 FROM exodide-no-readme AS test
 COPY test .coveragerc /test/
@@ -56,15 +64,6 @@ RUN unzip /example/*.whl && \
     mkdir -p /coverage/html && coverage html -d /coverage/html && \
     mkdir -p /coverage/xml && cp *.xml /coverage/xml/ && \
     rm -rf /test
-
-
-FROM exodide-no-readme AS example-build
-COPY example/setup.py /example/
-COPY example/pybind11 /example/pybind11/
-COPY example/exodide_example /example/exodide_example/
-WORKDIR /example
-RUN source /emsdk/emsdk_env.sh && \
-    CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
 
 
 FROM node:latest AS pyodide-node
