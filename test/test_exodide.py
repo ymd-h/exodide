@@ -42,6 +42,10 @@ class TestBuild(unittest.TestCase):
     def test_platform_tag(self):
         self.assertEqual(build.exodide_platform_tag(), "emscripten-wasm32")
 
+    def test_extension_filename(self):
+        self.assertEqual(build.exodide_extension_filename("test.somodule"),
+                         "test/somodule.cpython-310-wasm32-emscripten.so")
+
 
 class TestInstall(unittest.TestCase):
     @unittest.skipIf(platform.system() == 'Emscripten',
