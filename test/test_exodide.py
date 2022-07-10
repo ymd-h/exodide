@@ -45,7 +45,7 @@ class TestInspect(unittest.TestCase):
         so = glob.glob("/example/exodide_example/*.so")
         self.assertIsInstance(so, list)
         self.assertEqual(len(so), 1)
-        meta = inspect.Metadata(so[0])
+        meta = inspect.MetaData(so[0])
         self.assertTrue(meta.valid)
 
 
