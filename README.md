@@ -182,3 +182,7 @@ We distribute patched header files of CPython and NumPy, too.
   * [MPL-2.0](https://github.com/pyodide/pyodide/blob/main/LICENSE)
 * Others (exodide original codes)
   * [MIT](https://github.com/ymd-h/exodide/blob/master/LICENSE)
+
+
+## 4. Technical Details
+Technical details are described [here](https://github.com/ymd-h/exodide/blob/master/design.md)
