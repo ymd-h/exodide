@@ -15,16 +15,59 @@ from distutils.command.build import build as _build
 from setuptools.command.build_ext import build_ext as _build_ext
 from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 
-system_include = os.path.join(sys.prefix, "include", "python")
+def system_include() -> str:
+    """
+    Get system include directory
 
-def cpython_get_include() -> str:
-    return f"{os.path.dirname(__file__)}/cpython"
+    Returns
+    -------
+    str
+        Include directory of host Python
+    """
+    return os.path.join(sys.prefix, "include", "python")
 
-def numpy_get_include() -> str:
-    return f"{os.path.dirname(__file__)}/numpy"
+
+def exodide_include() -> List[str]:
+    """
+    Get exodide include directories
+
+    Returns
+    -------
+    list of str
+        Include directories in exodide package
+    """
+    dirname = os.path.dirname(__file__)
+    return [os.path.join(dirname, "cpython"),
+            os.path.join(dirname, "numpy")]
 
 
-def LDFLAGS() -> List[str]:
+def adjust_include(include: List[str]) -> List[str]:
+    """
+    Adjust include list
+
+    Parameters
+    ----------
+    include : list of str
+        Original include directories
+
+    Returns
+    -------
+    list of str
+        Adjusted include directories
+    """
+    s = system_include()
+    return exodide_include() + [I for I in include if (s not in I)]
+
+
+def exodide_links() -> List[str]:
+    """
+    Get exodide link args
+
+    Returns
+    -------
+    list of str
+        Link arguments for exodide
+    """
     return ["-s", "MODULARIZE=1",
             "-s", "LINKABLE=1",
             "-s", "EXPORT_ALL=1",
@@ -34,31 +77,62 @@ def LDFLAGS() -> List[str]:
             "-s", "SIDE_MODULE=1"]
 
 
-def plat_name() -> str:
+def exodide_unsupported_links() -> List[str]:
+    """
+    Get exodide unsupported link args
+
+    Returns
+    -------
+    list of str
+        Unsupported link arguments for exodide
+    """
+    return ["-shared", "-pthread"]
+
+
+def exodide_platform_tag() -> str:
+    """
+    Platform name tag for wheel
+
+    Returns
+    -------
+    str
+        platform tag
+    """
     return "emscripten-wasm32"
 
 
 class build(_build):
+    """
+    Build Command for exodide
+
+      * Replace platform name of wheel
+    """
     def finalize_options(self):
         with mock.patch("distutils.command.build.get_platform") as get_platform:
-            get_platform.return_value = plat_name()
+            get_platform.return_value = exodide_platform_tag()
             return super().finalize_options()
 
 
 class build_ext(_build_ext):
+    """
+    Build Extension Command for exodide
+
+      * Remove system Python from include directory
+      * Add exodide Python and NumPy to include directory
+      * Add linker options for Emscripten
+      * Remove not supported linker options
+    """
     def run(self):
-        self.include_dirs = [
-            cpython_get_include(),
-            numpy_get_include()
-        ] + [d for d in self.include_dirs if (system_include not in d)]
+        self.include_dirs = adjust_include(self.include_dirs)
 
         for ext in self.extensions:
-            ext.extra_link_args = ext.extra_link_args + LDFLAGS()
+            ext.extra_link_args = ext.extra_link_args + exodide_links()
         return super().run()
 
     def build_extensions(self):
+        remove_opt = exodide_unsupported_links()
         self.compiler.linker_so = [so for so in self.compiler.linker_so
-                                   if (so not in ["-shared", "-pthread"])]
+                                   if (so not in remove_opt)]
         return super().build_extensions()
 
     def get_ext_filename(self, ext_name):
@@ -67,5 +141,20 @@ class build_ext(_build_ext):
 
 
 def cmdclass() -> Dict[str, Command]:
+    """
+    Get command classes for exodide
+
+    Returns
+    -------
+    dict
+       Command definitions
+
+    Examples
+    --------
+    >>> from setuptools import setup
+    >>> from exodide import build
+    >>> setup(...,
+    ...       cmdclass=build.cmdclass())
+    """
     return {"build": build,
             "build_ext": build_ext}

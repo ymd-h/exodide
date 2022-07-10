@@ -11,7 +11,6 @@ SHELL ["/bin/bash", "-c"]
 
 FROM base AS build-base
 COPY Makefile /exodide/
-COPY exodide  /exodide/exodide/
 COPY numpy    /exodide/numpy/
 COPY cpython  /exodide/cpython/
 COPY pyodide  /exodide/pyodide/
@@ -21,13 +20,17 @@ RUN source /emsdk/emsdk_env.sh && \
     make && rm -rf numpy cpython pyodide script && rm -f Makefile
 
 
-FROM build-base AS build
-COPY setup.py README.md LICENSE /exodide/
+FROM build-base AS build-pre
+COPY exodide  /exodide/exodide/
+COPY setup.py LICENSE /exodide/
+
+
+FROM build-pre AS build
+COPY README.md /exodide/
 RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
 
 
-FROM build-base AS build-no-readme
-COPY setup.py LICENSE /exodide/
+FROM build-pre AS build-no-readme
 RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
 
 
@@ -41,18 +44,6 @@ COPY --from=build /dist /dist/
 RUN pip3 install /dist/* wheel && rm -rf /dist
 
 
-
-FROM exodide-no-readme AS test
-COPY test .coveragerc /test/
-WORKDIR /test
-RUN pip3 install coverage unittest-xml-reporting numpy && \
-    coverage run -m xmlrunner discover . && \
-    coverage report && \
-    mkdir -p /coverage/html && coverage html -d /coverage/html && \
-    mkdir -p /coverage/xml && cp *.xml /coverage/xml/ && \
-    rm -rf /test
-
-
 FROM exodide-no-readme AS example-build
 COPY example/setup.py /example/
 COPY example/pybind11 /example/pybind11/
@@ -60,6 +51,19 @@ COPY example/exodide_example /example/exodide_example/
 WORKDIR /example
 RUN source /emsdk/emsdk_env.sh && \
     CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
+
+
+FROM exodide-no-readme AS test
+COPY test .coveragerc /test/
+COPY --from=example-build /dist /example/
+WORKDIR /test
+RUN unzip /example/*.whl -d /example && \
+    pip3 install coverage unittest-xml-reporting numpy && \
+    coverage run -m xmlrunner discover . && \
+    coverage report && \
+    mkdir -p /coverage/html && coverage html -d /coverage/html && \
+    mkdir -p /coverage/xml && cp *.xml /coverage/xml/ && \
+    rm -rf /test
 
 
 FROM node:latest AS pyodide-node
