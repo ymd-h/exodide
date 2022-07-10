@@ -42,7 +42,7 @@ class TestInstall(unittest.TestCase):
 
 class TestInspect(unittest.TestCase):
     def test_metadata(self):
-        so = glob.glob("/example/exdodede_example/*.so")
+        so = glob.glob("/example/exodide_example/*.so")
         self.assertIsInstance(so, list)
         self.assertEqual(len(so), 1)
         meta = inspect.Metadata(so[0])
