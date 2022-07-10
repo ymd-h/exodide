@@ -53,6 +53,9 @@ We provide docker image
 
 ```shell
 docker run -it -v <your package source path>:/source ghcr.io/ymd-h/exodide:latest bash
+
+# Inside docker container
+source /emsdk/emsdk_env.sh # Set PATH for emcc/em++
 ```
 
 #### 2.2.3 Install from Source
