@@ -27,8 +27,8 @@ class TestBuild(unittest.TestCase):
         self.assertEqual(build.adjust_include([build.system_include()]),
                          build.exodide_include())
 
-    def test_plat_name(self):
-        self.assertEqual(build.plat_name(), "emscripten-wasm32")
+    def test_platform_tag(self):
+        self.assertEqual(build.exodide_platform_tag(), "emscripten-wasm32")
 
 
 class TestInstall(unittest.TestCase):

@@ -89,7 +89,7 @@ def exodide_unsupported_links() -> List[str]:
     return ["-shared", "-pthread"]
 
 
-def plat_name() -> str:
+def exodide_platform_tag() -> str:
     """
     Platform name tag for wheel
 
@@ -109,7 +109,7 @@ class build(_build):
     """
     def finalize_options(self):
         with mock.patch("distutils.command.build.get_platform") as get_platform:
-            get_platform.return_value = plat_name()
+            get_platform.return_value = exodide_platform_tag()
             return super().finalize_options()
 
 
