@@ -61,6 +61,7 @@ The followings are reuired;
 * `wheel` (`pip install exodide[build]` install it, too.)
 
 
+#### 2.3.1 Method 1: Main Usage
 ```python:setup.py
 from setuptools import setup
 from exodide import build
@@ -75,6 +76,28 @@ setup(
 
 then `CC=emcc CXX=em++ python setup.py bdist_wheel`.
 
+
+#### 2.3.2 Method 2: Fine tuning for Power User
+If your package has special build flow, you might need to call exodide internal API.
+
+All internal buil API are implemented at `exodide.build` module.
+
+* `system_include() -> str`: System include directory of host Python
+* `exodide_include() -> List[str]`: Include directories inside exodide package.
+* `adjust_include(include: List[str]) -> List[str]`: Adjust include directories
+  * Internally `system_include()` and `exodide_include()` are used
+* `exodide_links() -> List[str]`: Linker arguments
+* `exodide_unsupported_links() -> List[str]`: Unsupported linker arguments
+* `exodide_platform_tag() -> str`: Platform name tag for wheel
+
+
+
+#### 2.3.3 Method 3: Quick Usage
+
+Under Consideration
+
+
+#### 2.3.4 Notes
 
 Pyodide doesn't provide all the functionalities of CPython, so that
 you might need to modify your package. You can detect Emscripten
