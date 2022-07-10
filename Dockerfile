@@ -55,7 +55,7 @@ RUN source /emsdk/emsdk_env.sh && \
     CC=emcc CXX=em++ python3 setup.py bdist_wheel -d /dist && rm -rf /example
 
 
-FROM exodide-no-readme AS  example-cmdless-build
+FROM exodide-no-readme AS example-cmdless-build
 COPY example/setup-cmdless.py /example/
 COPY example/pybind11 /example/pybind11/
 COPY example/exodide_example /example/exodide_example/
