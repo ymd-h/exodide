@@ -52,7 +52,7 @@ You can install exodide from [PyPI](https://pypi.org/project/exodide/)
 We provide docker image
 
 ```shell
-docker run -it -v <your package source path>:/source ghcr.io/ymd-h/exodide:latest bash
+docker run -it -v <your package source path>:/src ghcr.io/ymd-h/exodide:latest bash
 
 # Inside docker container
 source /emsdk/emsdk_env.sh # Set PATH for emcc/em++
