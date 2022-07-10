@@ -28,6 +28,13 @@ class TestBuild(unittest.TestCase):
         self.assertEqual(build.adjust_include([build.system_include()]),
                          build.exodide_include())
 
+    def test_exodide_links(self):
+        links = build.exodide_links()
+        self.assertIsInstance(links, list)
+        self.assertEqual(len(links) % 2, 0)
+        for i in range(0, len(links), 2):
+            self.assertEqual(links[i], "-s")
+
     def test_platform_tag(self):
         self.assertEqual(build.exodide_platform_tag(), "emscripten-wasm32")
 
