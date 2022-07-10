@@ -37,6 +37,8 @@ RUN python3 setup.py bdist_wheel -d /dist && rm -rf /exodide
 FROM base AS exodide
 COPY --from=build /dist /dist/
 RUN pip3 install /dist/* wheel && rm -rf /dist
+WORKDIR /src
+CMD ["bash"]
 
 
 FROM base AS exodide-no-readme
