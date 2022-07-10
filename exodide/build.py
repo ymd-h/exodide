@@ -156,6 +156,19 @@ class build_ext(_build_ext):
         return exodide_extension_filename(ext_name)
 
 
+class exodide_wheel(_bdist_wheel):
+    """
+    wheel Command for exodide
+    """
+    def initialize_options(self):
+        self.distribution.cmdclass["build"] = build
+        self.distribution.cmdclass["build_ext"] = build_ext
+        self.distribution.command_obj.pop("build", None)
+        self.distribution.command_obj.pop("build_ext", None)
+
+        return super().initialize_options()
+
+
 def cmdclass() -> Dict[str, Command]:
     """
     Get command classes for exodide
