@@ -36,6 +36,7 @@ C/C++ extension packages on Pyodide.
 
 ### 2.2 Install exodide
 
+#### 2.2.1 Install from PyPI
 You can install exodide from [PyPI](https://pypi.org/project/exodide/)
 
 * `pip install exodide`
@@ -47,10 +48,25 @@ You can install exodide from [PyPI](https://pypi.org/project/exodide/)
 * `pip install exodide[all]`
   * With NumPy and wheel
 
+#### 2.2.2 Use docker image
+We provide docker image
 
+```shell
+docker run -it -v <your package source path>:/source ghcr.io/ymd-h/exodide:latest bash
+```
+
+#### 2.2.3 Install from Source
 Since this repository doesn't contains patched headers, you cannot
 install directly from GitHub like `pip install git+https://github.com/ymd-h/exodide`.
-Please read [4. Build exodide](https://github.com/ymd-h/exodide#4-build-exodide).
+
+```shell
+git clone --recursive --depth 1 https://github.com/ymd-h/exodide.git
+cd exodide
+
+make
+
+pip install .
+```
 
 ### 2.3 Build with exodide
 The followings are reuired;
@@ -163,15 +179,3 @@ We distribute patched header files of CPython and NumPy, too.
   * [MPL-2.0](https://github.com/pyodide/pyodide/blob/main/LICENSE)
 * Others (exodide original codes)
   * [MIT](https://github.com/ymd-h/exodide/blob/master/LICENSE)
-
-
-## 4. Build exodide
-
-```shell
-git clone --recursive --depth 1 https://github.com/ymd-h/exodide.git
-cd exodide
-
-make
-
-pip install .
-```
