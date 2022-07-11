@@ -1,4 +1,4 @@
-from wheel import bdist_wheel as _bdist_wheel
+from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 
 from exodide.build import build, build_ext
 
