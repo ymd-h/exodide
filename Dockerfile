@@ -61,7 +61,7 @@ COPY example/pybind11 /example/pybind11/
 COPY example/exodide_example /example/exodide_example/
 WORKDIR /example
 RUN source /emsdk/emsdk_env.sh && \
-    CC=emcc CXX=em++ python3 setup-cmdless.py --command-packages exodide.build \
+    CC=emcc CXX=em++ python3 setup-cmdless.py --command-packages exodide \
     exodide_wheel -d /dist && \
     rm -rf /example
 
