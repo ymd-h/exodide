@@ -112,8 +112,12 @@ All internal buil API are implemented at `exodide.build` module.
 
 
 #### 2.3.3 Method 3: Quick Usage
+We also provide custom setup command `exodide_wheel`.
+The following command have same effect with the first option at '2.3.1 Main Usage'.
 
-Under Consideration
+```shell
+python setup.py --command-packages exodide exodide_wheel
+```
 
 
 #### 2.3.4 Notes
