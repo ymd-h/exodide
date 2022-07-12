@@ -106,6 +106,7 @@ ENV DIST=/pyodide-node/dist/ TEST=example/test
 COPY --from=build /dist $DIST
 COPY --from=example-cmdless-build /dist $DIST
 COPY ${TEST}/test.mjs ${TEST}/test_example.py ${TEST}/run.sh /pyodide-node/example/
+COPY --from=example-test /example-test /example-test
 RUN sed -i \
     -e s/"<exodide>"/$(find $DIST -name "exodide-*.whl" -exec basename {} \;)/ \
     -e s/"<example>"/$(find $DIST -name "*_example-*.whl" -exec basename {} \;)/\
