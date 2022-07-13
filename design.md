@@ -129,3 +129,14 @@ exodide can dump such `dylink`/`dylink.0` section with
 `exodide.inspect` module. This feature was used to debug exodide
 itself, but we have no idea about other usages. We might add some
 useful information in the future.
+
+
+### Misc
+
+In this repository, we try to use Dockerfile as CI configuration to
+make (relatively) CI platform independent. This was inspired by
+[Dagger](https://dagger.io/), and later we found
+[Eathly](https://earthly.dev/) did similarly.
+
+Dockerfile has great reproducibility and BuildKit, build engine of
+Docker, properly executes only necessary layers.
