@@ -55,8 +55,15 @@ def adjust_include(include: List[str]) -> List[str]:
     list of str
         Adjusted include directories
     """
-    s = system_include()
-    return exodide_include() + [I for I in include if (s not in I)]
+    s = [system_include()]
+    try:
+        import numpy as np
+        s.append(np.get_include())
+    except ImportError:
+        pass
+
+    return exodide_include() + [I for I in include
+                                if all(ss not in I for ss in s)]
 
 
 def exodide_links() -> List[str]:
