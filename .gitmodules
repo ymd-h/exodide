@@ -25,3 +25,6 @@
 [submodule "example-spaCy/third_party/cymem"]
 	path = example-spaCy/third_party/cymem
 	url = https://github.com/explosion/cymem.git
+[submodule "example-spaCy/third_party/preshed"]
+	path = example-spaCy/third_party/preshed
+	url = https://github.com/explosion/preshed.git
