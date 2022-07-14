@@ -28,3 +28,6 @@
 [submodule "example-spaCy/third_party/preshed"]
 	path = example-spaCy/third_party/preshed
 	url = https://github.com/explosion/preshed.git
+[submodule "example-spaCy/third_party/srsly"]
+	path = example-spaCy/third_party/srsly
+	url = https://github.com/explosion/srsly.git
