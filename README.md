@@ -37,13 +37,12 @@ C/C++ extension packages on Pyodide.
 You can install exodide from [PyPI](https://pypi.org/project/exodide/)
 
 * `pip install exodide`
-  * Only exodide
 * `pip install exodide[build]`
-  * With wheel
+  * With build dependencies
 * `pip install exodide[inspect]`
-  * With NumPy
+  * With inspect dependencies
 * `pip install exodide[all]`
-  * With NumPy and wheel
+  * With all dependencies
 
 #### 2.2.2 Use docker image
 We provide docker image

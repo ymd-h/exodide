@@ -14,6 +14,9 @@ from distutils.command.build import build as _build
 from setuptools import Command
 from setuptools.command.build_ext import build_ext as _build_ext
 from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
+from wblog import getLogger
+
+logger = getLogger()
 
 def system_include() -> str:
     """
@@ -62,8 +65,10 @@ def adjust_include(include: List[str]) -> List[str]:
     except ImportError:
         pass
 
-    return exodide_include() + [I for I in include
-                                if all(ss not in I for ss in s)]
+    ret = exodide_include() + [I for I in include
+                               if all(ss not in I for ss in s)]
+    logger.debug(f"adjust_include: {include} -> {ret}")
+    return ret
 
 
 def exodide_links() -> List[str]:
@@ -155,10 +160,17 @@ class build_ext(_build_ext):
         return super().run()
 
     def build_extensions(self):
+        logger.debug(f"include_dirs: {self.include_dirs}")
         remove_opt = exodide_unsupported_links()
         self.compiler.linker_so = [so for so in self.compiler.linker_so
                                    if (so not in remove_opt)]
+        logger.debug(f"linker_so: {self.compiler.linker_so}")
+
         return super().build_extensions()
+
+    def build_extension(self, ext):
+        ext.include_dirs = adjust_include(ext.include_dirs)
+        return super().build_extension(ext)
 
     def get_ext_filename(self, ext_name):
         return exodide_extension_filename(ext_name)
