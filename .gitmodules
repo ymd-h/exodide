@@ -10,3 +10,24 @@
 [submodule "example/pybind11"]
 	path = example/pybind11
 	url = https://github.com/pybind/pybind11.git
+[submodule "example-spaCy/third_party/spaCy"]
+	path = example-spaCy/third_party/spaCy
+	url = https://github.com/explosion/spaCy.git
+[submodule "example-spaCy/third_party/thinc"]
+	path = example-spaCy/third_party/thinc
+	url = https://github.com/explosion/thinc.git
+[submodule "example-spaCy/third_party/murmurhash"]
+	path = example-spaCy/third_party/murmurhash
+	url = https://github.com/explosion/murmurhash.git
+[submodule "example-spaCy/third_party/cython-blis"]
+	path = example-spaCy/third_party/cython-blis
+	url = https://github.com/explosion/cython-blis.git
+[submodule "example-spaCy/third_party/cymem"]
+	path = example-spaCy/third_party/cymem
+	url = https://github.com/explosion/cymem.git
+[submodule "example-spaCy/third_party/preshed"]
+	path = example-spaCy/third_party/preshed
+	url = https://github.com/explosion/preshed.git
+[submodule "example-spaCy/third_party/srsly"]
+	path = example-spaCy/third_party/srsly
+	url = https://github.com/explosion/srsly.git

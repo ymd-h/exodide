@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <form>
+        <div class="m-2">
+          <textarea id="input-area" class="form-control" disabled>Loading</textarea>
+        </div>
+        <div class="m-2">
+          <button type="button" id="button" class="btn btn-primary" disabled>
+            Execute
+          </button>
+        </div>
+      </form>
+      <div id="vis"></div>
+      <div id="result"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.21.0a2/full/pyodide.js"></script>
+    <script type="module">
+      const pyodide = await loadPyodide();
+      await pyodide.loadPackage(["micropip", "numpy", "pydantic"]);
+      const tokenize = await pyodide.runPythonAsync(`
+import importlib
+import micropip
+from pyodide import to_js, http, JsProxy
+
+await micropip.install(["exodide",
+                        "wasabi", "catalogue", "typer", "pathy",
+                        "tqdm", "requests", "jinja2",
+                        "langcodes", "typing_extensions"])
+from exodide.install import fetch_install
+pkg = ["blis-0.7.8",
+       "cymem-2.0.6",
+       "murmurhash-1.0.7",
+       "preshed-3.0.6",
+       "srsly-2.4.3",
+       "thinc-8.1.0",
+       "spacy-3.4.0"]
+
+for p in pkg:
+    await fetch_install(f"{p}-cp310-cp310-emscripten_wasm32.whl")
+await fetch_install("en_core_web_sm-3.4.0-py3-none-any.whl")
+
+
+import spacy
+from spacy import displacy
+nlp = spacy.load("en_core_web_sm")
+
+def tokenize(sentence):
+    doc = nlp(sentence)
+    token = [{"text": token.text, "lemma": token.lemma_, "pos": token.pos_,
+              "tag": token.tag_, "dep": token.dep_, "shape": token.shape_,
+              "alpha": token.is_alpha, "stop": token.is_stop} for token in doc]
+    vis = displacy.render(doc, options={"compact":True})
+    return to_js({"vis": vis, "token": token})
+tokenize
+`);
+      function draw_table(token){
+          const cols = ["text", "lemma", "pos", "tag",
+                        "dep", "shape", "alpha", "stop"];
+          const table = document.createElement("table");
+          table.className = "table table-striped";
+
+          const thead = document.createElement("thead");
+          const tr_head = document.createElement("tr");
+          for(const c of cols){
+              const th = document.createElement("th");
+              th.innerText = c;
+              tr_head.appendChild(th);
+          }
+          thead.appendChild(tr_head);
+          table.appendChild(thead);
+
+          const tbody = document.createElement("tbody");
+          for(const r of token){
+              const tr_row = document.createElement("tr");
+              for(const c of cols){
+                  const td = document.createElement("td");
+                  td.innerText = r.get(c);
+                  tr_row.appendChild(td);
+              }
+              tbody.appendChild(tr_row);
+          }
+          table.appendChild(tbody);
+
+          const div = document.getElementById("result")
+          while(div.firstChild){ div.removeChild(div.firstChild); }
+          div.appendChild(table);
+      }
+
+      const area = document.getElementById("input-area");
+      area.placeholder = "Write any English sentence(s), then click the button.";
+      area.value = "";
+      area.disabled = false;
+
+      const btn = document.getElementById("button");
+      btn.addEventListener("click", async (event)=>{
+          const sentence = area.value;
+          if(sentence && (sentence !== "")){
+              const token_vis = tokenize(sentence);
+              const vis = token_vis.get("vis");
+              document.getElementById("vis").innerHTML = vis;
+
+              const token = token_vis.get("token");
+              draw_table(token);
+          }
+      });
+      btn.disabled = false;
+    </script>
+  </body>
+</html>
