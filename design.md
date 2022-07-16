@@ -131,7 +131,7 @@ itself, but we have no idea about other usages. We might add some
 useful information in the future.
 
 
-### Misc
+## 5. Misc
 
 In this repository, we try to use Dockerfile as CI configuration to
 make (relatively) CI platform independent. This was inspired by
