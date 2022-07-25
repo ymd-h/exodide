@@ -37,7 +37,12 @@ class TestBuild(unittest.TestCase):
 
     def test_exodided_unsupported_links(self):
         self.assertEqual(build.exodide_unsupported_links(),
-                         ["-shared", "-pthread"])
+                         ["-shared", "-pthread",
+                          "-Wl,-Bsymbolic-functions",
+                          "-Wl,--strip-all",
+                          "-Wl,-strip-all",
+                          "-Wl,--sort-common",
+                          "-Wl,--as-needed"])
 
     def test_platform_tag(self):
         self.assertEqual(build.exodide_platform_tag(), "emscripten-wasm32")
