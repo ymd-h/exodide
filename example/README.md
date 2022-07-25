@@ -8,3 +8,7 @@ python3 -m http.server
 ```
 
 Access `localhost:8000/index.html` with browser and see console.
+
+
+> **Note**
+> If you use Docker container, please pass `-p 8000:8000` option to `docker run` command in order to access the container port from local machine.

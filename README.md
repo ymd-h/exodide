@@ -95,7 +95,7 @@ then `CC=emcc CXX=em++ python setup.py bdist_wheel`.
 #### 2.3.2 Method 2: Fine tuning for Power User
 If your package has special build flow, you might need to call exodide internal API.
 
-All internal buil API are implemented at `exodide.build` module.
+All internal build API are implemented at `exodide.build` module.
 
 * `system_include() -> str`: System include directory of host Python
 * `exodide_include() -> List[str]`: Include directories inside exodide package.
