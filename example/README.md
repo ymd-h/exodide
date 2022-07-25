@@ -3,7 +3,7 @@
 Setup emscripten, then execute the following,
 
 ```shell
-CC=emcc CXX=em++ python3 setup.py bdist_whell
+CC=emcc CXX=em++ python3 setup.py bdist_wheel
 python3 -m http.server
 ```
 
