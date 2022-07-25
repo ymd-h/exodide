@@ -98,7 +98,12 @@ def exodide_unsupported_links() -> List[str]:
     list of str
         Unsupported link arguments for exodide
     """
-    return ["-shared", "-pthread"]
+    return ["-shared", "-pthread",
+            "-Wl,-Bsymbolic-functions",
+            "-Wl,--strip-all",
+            "-Wl,-strip-all",
+            "-Wl,--sort-common",
+            "-Wl,--as-needed"]
 
 
 def exodide_platform_tag() -> str:
