@@ -6,12 +6,21 @@
     <title>example with PyScript</title>
 
     <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <script defer src="https://pyscript.net/unstable/pyscript.js"></script>
   </head>
   <body>
+    <div id="result">
+      <div id="add"></div>
+      <div id="fibonacci"></div>
+    </div>
     <py-env>
       - exodide
     </py-env>
+    <py-config>
+      name: "exodide-pyscript"
+      runtimes:
+        - src: "https://cdn.jsdelivr.net/pyodide/v0.21.0a2/full/pyodide.js"
+    </py-config>
     <py-script>
       # asyncio
       from exodide.install import fetch_install
@@ -20,8 +29,8 @@
 
       ee.hello_world()
 
-      pyscript.write(f"5 + 7 = {ee.add_int(5, 7)}")
-      pyscript.write(f"fibonacci(5) = {ee.fibonacci(5)}")
+      pyscript.write("add", f"5 + 7 = {ee.add_int(5, 7)}")
+      pyscript.write("fibonacci", f"fibonacci(5) = {ee.fibonacci(5)}")
     </py-script>
   </body>
 </html>
