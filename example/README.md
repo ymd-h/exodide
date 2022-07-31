@@ -7,8 +7,15 @@ CC=emcc CXX=em++ python3 setup.py bdist_wheel
 python3 -m http.server
 ```
 
-Access `localhost:8000/index.html` with browser and see console.
+1. Simple Exapmle: Access `localhost:8000/index.html` with browser and see console.
+2. Example with [PyScript](https://github.com/pyscript/pyscript): Access `localhost:8000/index_pyscript.html` with browser.
 
 
-> **Note**
-> If you use Docker container, please pass `-p 8000:8000` option to `docker run` command in order to access the container port from local machine.
+
+## With Docker
+We also provide Dockerfile to build and serve this example.
+
+```shell
+docker build -t exodide-example .
+docker run -it -p 8000:8000 exodide-example
+```
