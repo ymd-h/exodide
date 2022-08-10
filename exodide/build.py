@@ -32,19 +32,22 @@ def get_emscripten_version() -> str:
     str
         Emscripten version
     """
-    error = lambda a: RuntimeError(f"Failed to {a} output of `emcc --version`. " +
-                                   "Emscripten setup might be wrong.")
+    error = lambda a: (f"Failed to {a} `emcc --version`. " +
+                       "Emscripten setup might be wrong.")
 
-    emcc = subprocess.run(["emcc", "--version"], capture_output=True, text=True)
+    try:
+        emcc = subprocess.run(["emcc", "--version"], capture_output=True, text=True)
+    except e:
+        raise RuntimeError(error("execute") + f" {e}")
 
     if not emcc.stdout:
-        raise error("capture")
+        raise RuntimeError(error("capture"))
 
     version = re.search(r"^emcc \(.*\) ([0-9]+)\.([0-9]+)\.([0-9]+) \(.*\)$",
                               emcc.stdout, re.M)
 
     if not version:
-        raise error("parse")
+        raise RuntimeError(error("parse"))
 
     return f"{version[1]}.{version[2]}.{version[3]}"
 
