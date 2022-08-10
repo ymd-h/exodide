@@ -10,10 +10,7 @@
       await pyodide.loadPackage("micropip");
       await pyodide.runPythonAsync(`
 import micropip
-await micropip.install("exodide")
-
-from exodide.install import fetch_install
-await fetch_install("dist/exodide_example-0.0.1-cp310-cp310-emscripten_3_1_14_wasm32.whl")
+await micropip.install("dist/exodide_example-0.0.1-cp310-cp310-emscripten_3_1_14_wasm32.whl")
 
 import exodide_example as ee
 
