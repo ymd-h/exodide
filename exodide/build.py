@@ -115,7 +115,7 @@ def exodide_platform_tag() -> str:
     str
         platform tag
     """
-    return "emscripten-wasm32"
+    return "emscripten_3_1_14_wasm32"
 
 
 def exodide_extension_filename(ext_name: str) -> str:
