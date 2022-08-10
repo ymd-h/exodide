@@ -26,7 +26,7 @@ C/C++ extension packages on Pyodide.
   * [wheel](https://github.com/pypa/wheel)
   * C/C++ package source working on CPython 3.10.2
 * 2.4: Run
-  * Pyodide v0.21.0a2
+  * Pyodide v0.21.0
 * 2.5: Inspect
   * [NumPy](https://numpy.org/)
 
@@ -135,7 +135,7 @@ compiler by `__EMSCRIPTEN__` macro ([ref](https://emscripten.org/docs/compiling/
 > exodide doesn't check any wheel compatibility, so that user must take care.
 
 
-Pyodide v0.21a2 is required.
+Pyodide v0.21 is required.
 
 ```javascript
 const pyodide = await loadPyodide();
