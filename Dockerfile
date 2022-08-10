@@ -70,7 +70,8 @@ FROM exodide-no-readme AS test
 COPY test .coveragerc /test/
 COPY --from=example-build /dist /example/
 WORKDIR /test
-RUN unzip /example/*.whl -d /example && \
+RUN source /emsdk/emsdk_env.sh && \
+    unzip /example/*.whl -d /example && \
     pip3 install coverage unittest-xml-reporting numpy && \
     coverage run -m xmlrunner discover . && \
     coverage report && \
