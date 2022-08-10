@@ -44,7 +44,10 @@ async def fetch_install(wheel_url: str):
     -----
     Dependencies are not resolved. User must take care by yourself.
     """
-    logger.warning("Deprecated: From Pyodide v0.21.0, `micropip.install()` accepts custom wheels ending with correct abi-tag. `exodide.install` module is no more needed.")
+    logger.warning("Deprecated: From Pyodide v0.21.0, " +
+                   "`micropip.install()` accepts custom wheels " +
+                   "ending with correct abi-tag. " +
+                   "`exodide.install` module is no more needed.")
 
     response = await http.pyfetch(wheel_url)
     wheel_buffer = await response.buffer()
