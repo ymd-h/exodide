@@ -70,7 +70,7 @@ pip install .
 ### 2.3 Build with exodide
 The followings are reuired;
 
-* Emscripten v3.1.13
+* Emscripten v3.1.14
   * Set up `emcc` and `em++` as [the official document](https://emscripten.org/docs/getting_started/downloads.html)
 * C/C++ extension package source working on Python 3.10
 * `wheel` (`pip install exodide[build]` install it, too.)
