@@ -81,11 +81,11 @@ RUN unzip /example/*.whl -d /example && \
 
 FROM node:latest AS pyodide-node
 WORKDIR /pyodide-node
-RUN npm i pyodide@0.21.0-alpha.2 && \
+RUN npm i pyodide@0.21.0 && \
     npm i -g http-server && \
-    curl -LO https://github.com/pyodide/pyodide/releases/download/0.21.0a2/pyodide-build-0.21.0a2.tar.bz2 && \
-    tar xvf pyodide-build-0.21.0a2.tar.bz2 && \
-    rm -f pyodide-build-0.21.0a2.tar.bz2
+    curl -LO https://github.com/pyodide/pyodide/releases/download/0.21.0/pyodide-build-0.21.0.tar.bz2 && \
+    tar xvf pyodide-build-0.21.0.tar.bz2 && \
+    rm -f pyodide-build-0.21.0.tar.bz2
 
 
 FROM pyodide-node AS example-test
