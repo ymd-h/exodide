@@ -5,8 +5,11 @@ This module provides functionalities
 to build C/C++ extension package for Pyodide.
 """
 
+import functools
 import os
+import re
 import sys
+import subprocess
 from typing import Dict, List
 from unittest import mock
 
@@ -17,6 +20,35 @@ from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 from wblog import getLogger
 
 logger = getLogger()
+
+
+@functools.cache
+def get_emscripten_version() -> str:
+    """
+    Get Emscripten version
+
+    Returns
+    -------
+    str
+        Emscripten version
+    """
+    error = lambda a: RuntimeError(f"Failed to {a} output of `emcc --version`. " +
+                                   "Emscripten setup might be wrong.")
+
+    emcc = subprocess.run(["emcc", "--version"], capture_output=True, text=True)
+
+    if not emcc.stdout:
+        raise error("capture")
+
+    version = re.search(r"^emcc \(.*\) ([0-9]+)\.([0-9]+)\.([0-9]+) \(.*\)$",
+                              emcc.stdout, re.M)
+
+    if not version:
+        raise error("parse")
+
+    return f"{version[1]}.{version[2]}.{version[3]}"
+
+
 
 def system_include() -> str:
     """
@@ -115,7 +147,7 @@ def exodide_platform_tag() -> str:
     str
         platform tag
     """
-    return "emscripten_3_1_14_wasm32"
+    return f"emscripten_{get_emscripten_version()}_wasm32"
 
 
 def exodide_extension_filename(ext_name: str) -> str:
