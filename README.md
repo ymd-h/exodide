@@ -22,7 +22,7 @@ C/C++ extension packages on Pyodide.
 ### 2.1 Requirement Summary
 
 * 2.3: Build
-  * [Emscripten](https://emscripten.org/) v3.1.13
+  * [Emscripten](https://emscripten.org/) v3.1.14
   * [wheel](https://github.com/pypa/wheel)
   * C/C++ package source working on CPython 3.10.2
 * 2.4: Run
