@@ -24,11 +24,16 @@ import importlib
 
 import pyodide_js
 from pyodide import http, JsProxy
+from wblog import getLogger
 
+logger = getLogger()
 
 async def fetch_install(wheel_url: str):
     """
     Fetch wheel file then install it.
+
+    .. deprecated:: 1.0.4
+        `exodide.install` module is no more needed. Use `micropip.install`.
 
     Parameters
     ----------
@@ -39,6 +44,8 @@ async def fetch_install(wheel_url: str):
     -----
     Dependencies are not resolved. User must take care by yourself.
     """
+    logger.warning("Deprecated: From Pyodide v0.21.0, `micropip.install()` accepts custom wheels ending with correct abi-tag. `exodide.install` module is no more needed.")
+
     response = await http.pyfetch(wheel_url)
     wheel_buffer = await response.buffer()
     await install_wheel_buffer(wheel_buffer)
