@@ -12,6 +12,7 @@ Python code inside web browser.
 Although we can run most of pure-Python packages on Pyodide, however,
 available C/C++ extension packages are limited to
 [builtin packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html).
+(Update: From v0.21.0, Pyodide started to accept non-builtin C/C++ packages.)
 
 The motivation of this project (exodide) is providing C/C++ extension
 builder for Pyodide, and enables users to run your own custom
