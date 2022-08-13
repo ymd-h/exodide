@@ -131,7 +131,7 @@ compiler by `__EMSCRIPTEN__` macro ([ref](https://emscripten.org/docs/compiling/
 ```
 
 ### 2.4 Install extension package to Pyodide
-> **Notes**
+> **Note**
 > Since from Pyodide v0.21.0 `micropip.install()` accepts custom URL,
 > `exodide.install` module become deprecated.
 
