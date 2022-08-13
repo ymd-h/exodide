@@ -9,7 +9,7 @@ Pyodide. Fortunately, spaCy uses relatively simple build system.
 
 ```shell
 docker build -t example-spacy:latest .
-docker run -p 8000:8000 example-spacy:latest
+docker run -it -p 8000:8000 example-spacy:latest
 ```
 
 then open `localhost:8000/index.html` with your browser.
