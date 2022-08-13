@@ -1,4 +1,4 @@
-FROM ghcr.io/ymd-h/exodide:v1.0.3 AS build
+FROM ghcr.io/ymd-h/exodide:v1.0.4 AS build
 COPY exodide_example /src/exodide_example/
 COPY pybind11 /src/pybind11/
 COPY setup.py /src/

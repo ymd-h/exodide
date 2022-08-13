@@ -8,7 +8,7 @@ RUN pip download numpy cython \
     -d /deps
 
 
-FROM ghcr.io/ymd-h/exodide:v1.0.2 AS build-base
+FROM ghcr.io/ymd-h/exodide:v1.0.4 AS build-base
 COPY --from=deps /deps /deps/
 RUN pip install /deps/*
 
