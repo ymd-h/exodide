@@ -28,22 +28,19 @@
 import micropip
 from pyodide import to_js, http, JsProxy
 
-await micropip.install(["exodide",
-                        "wasabi", "catalogue", "typer", "pathy",
-                        "tqdm", "requests", "jinja2",
-                        "langcodes", "typing_extensions"])
-from exodide.install import fetch_install
-pkg = ["blis-0.7.8",
-       "cymem-2.0.6",
-       "murmurhash-1.0.7",
-       "preshed-3.0.6",
-       "srsly-2.4.3",
-       "thinc-8.1.0",
-       "spacy-3.4.0"]
+pkg = [f"./{p}-cp310-cp310-emscripten_3_1_14_wasm32.whl"
+       for p in ["blis-0.7.8",
+                 "cymem-2.0.6",
+                 "murmurhash-1.0.7",
+                 "preshed-3.0.6",
+                 "srsly-2.4.3",
+                 "thinc-8.1.0",
+                 "spacy-3.4.0"]]
 
-for p in pkg:
-    await fetch_install(f"{p}-cp310-cp310-emscripten_3_1_14_wasm32.whl")
-await fetch_install("en_core_web_sm-3.4.0-py3-none-any.whl")
+await micropip.install(["wasabi", "catalogue<2.1.0", "typer<0.5.0", "pathy",
+                        "tqdm", "requests", "jinja2",
+                        "langcodes", "typing_extensions",
+                        "./en_core_web_sm-3.4.0-py3-none-any.whl"] + pkg)
 
 
 import spacy
