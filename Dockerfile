@@ -1,5 +1,5 @@
 From python:3.10.2 AS base
-ENV EMSCRIPTEN_VERSION=3.1.13
+ENV EMSCRIPTEN_VERSION=3.1.14
 RUN git clone --depth 1 https://github.com/emscripten-core/emsdk.git /emsdk && \
     cd /emsdk && \
     git pull && \
@@ -70,7 +70,8 @@ FROM exodide-no-readme AS test
 COPY test .coveragerc /test/
 COPY --from=example-build /dist /example/
 WORKDIR /test
-RUN unzip /example/*.whl -d /example && \
+RUN source /emsdk/emsdk_env.sh && \
+    unzip /example/*.whl -d /example && \
     pip3 install coverage unittest-xml-reporting numpy && \
     coverage run -m xmlrunner discover . && \
     coverage report && \
@@ -81,11 +82,11 @@ RUN unzip /example/*.whl -d /example && \
 
 FROM node:latest AS pyodide-node
 WORKDIR /pyodide-node
-RUN npm i pyodide@0.21.0-alpha.2 && \
+RUN npm i pyodide@0.21.0 && \
     npm i -g http-server && \
-    curl -LO https://github.com/pyodide/pyodide/releases/download/0.21.0a2/pyodide-build-0.21.0a2.tar.bz2 && \
-    tar xvf pyodide-build-0.21.0a2.tar.bz2 && \
-    rm -f pyodide-build-0.21.0a2.tar.bz2
+    curl -LO https://github.com/pyodide/pyodide/releases/download/0.21.0/pyodide-build-0.21.0.tar.bz2 && \
+    tar xvf pyodide-build-0.21.0.tar.bz2 && \
+    rm -f pyodide-build-0.21.0.tar.bz2
 
 
 FROM pyodide-node AS example-test

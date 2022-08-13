@@ -45,7 +45,7 @@ class TestBuild(unittest.TestCase):
                           "-Wl,--as-needed"])
 
     def test_platform_tag(self):
-        self.assertEqual(build.exodide_platform_tag(), "emscripten-wasm32")
+        self.assertEqual(build.exodide_platform_tag(), "emscripten_3.1.14_wasm32")
 
     def test_extension_filename(self):
         self.assertEqual(build.exodide_extension_filename("test.somodule"),

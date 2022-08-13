@@ -12,6 +12,7 @@ Python code inside web browser.
 Although we can run most of pure-Python packages on Pyodide, however,
 available C/C++ extension packages are limited to
 [builtin packages](https://pyodide.org/en/stable/usage/packages-in-pyodide.html).
+(Update: From v0.21.0, Pyodide started to accept non-builtin C/C++ packages.)
 
 The motivation of this project (exodide) is providing C/C++ extension
 builder for Pyodide, and enables users to run your own custom
@@ -22,11 +23,11 @@ C/C++ extension packages on Pyodide.
 ### 2.1 Requirement Summary
 
 * 2.3: Build
-  * [Emscripten](https://emscripten.org/) v3.1.13
+  * [Emscripten](https://emscripten.org/) v3.1.14
   * [wheel](https://github.com/pypa/wheel)
   * C/C++ package source working on CPython 3.10.2
 * 2.4: Run
-  * Pyodide v0.21.0a2
+  * Pyodide v0.21.0
 * 2.5: Inspect
   * [NumPy](https://numpy.org/)
 
@@ -70,7 +71,7 @@ pip install .
 ### 2.3 Build with exodide
 The followings are reuired;
 
-* Emscripten v3.1.13
+* Emscripten v3.1.14
   * Set up `emcc` and `em++` as [the official document](https://emscripten.org/docs/getting_started/downloads.html)
 * C/C++ extension package source working on Python 3.10
 * `wheel` (`pip install exodide[build]` install it, too.)
@@ -131,22 +132,20 @@ compiler by `__EMSCRIPTEN__` macro ([ref](https://emscripten.org/docs/compiling/
 ```
 
 ### 2.4 Install extension package to Pyodide
-> **Warning**
-> exodide doesn't check any wheel compatibility, so that user must take care.
+> **Note**
+> Since from Pyodide v0.21.0 `micropip.install()` accepts custom URL,
+> `exodide.install` module become deprecated.
 
 
-Pyodide v0.21a2 is required.
+Pyodide v0.21 is required.
+
 
 ```javascript
 const pyodide = await loadPyodide();
 
 await pyodide.runPythonAsync(`
 import micropip
-micropip.install("exodide")
-
-from exodide.install import fetch_install
-
-await fetch_install("example.com/your-package.whl")
+micropip.install("example.com/your-package-X.Y.Z-cp310-cp310-emscripten_3_1_14_wasm32.whl")
 
 import your_package
 # omit
