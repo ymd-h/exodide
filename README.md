@@ -145,7 +145,7 @@ const pyodide = await loadPyodide();
 
 await pyodide.runPythonAsync(`
 import micropip
-micropip.install("example.com/your-package.whl")
+micropip.install("example.com/your-package-X.Y.Z-cp310-cp310-emscripten_3_1_14_wasm32.whl")
 
 import your_package
 # omit
