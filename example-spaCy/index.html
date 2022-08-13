@@ -25,7 +25,6 @@
       const pyodide = await loadPyodide();
       await pyodide.loadPackage(["micropip", "numpy", "pydantic"]);
       const tokenize = await pyodide.runPythonAsync(`
-import importlib
 import micropip
 from pyodide import to_js, http, JsProxy
 
